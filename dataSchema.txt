@@ -1,0 +1,30 @@
+New class page:
+
+Those making the new class page, expect to EXPORT an object with this schema.
+Those making the assignment page or class homepage, expect to GET an object with this schema.
+
+{
+    shortClassName: string,
+    longClassName: string,
+    isActive: boolean,
+    categories: [ // Array of objects with this schema, empty at first
+        {
+            name: string,
+            weight: number
+        }
+    ],
+    assignments: [ // Array of objects with this schema, empty at first
+        {
+            id: number (or string??),
+            name: string,
+            weight: number, // If 0, use default weight
+            pointsEarned: number,
+            pointsPossible: number,
+            category: string,
+            habits: {
+                stat1: any, // TBD...
+                stat2: any,
+            }
+        }
+    ]
+}
