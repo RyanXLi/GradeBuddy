@@ -1,3 +1,15 @@
+:root {
+    --theme-color: mintcream;
+    --theme-hovered: #E4FFE4;
+    --theme-selected: #72BF72;
+    --theme-grey: #727F72;
+    --theme-accent: #264026;
+}
+
+.hoverable:hover {
+    background-color: var(--theme-hovered);
+}
+
 html, body {
     height: 100%;
     margin: 0;
