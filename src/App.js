@@ -5,7 +5,7 @@ import uuid from 'uuid/v4';
 
 const COURSE = {
     id: uuid(),
-    shortName: "CS125 kajshdkjhakdljfhalksdjfhlkajsdhflajshdlkjasdhf",
+    shortName: "CS125 ajkhsdfkahsdfkjahsdgkfjhasgdkfjhagsdkjfhgkajsdhfg",
     longName: "CS125 Intro to Computer Science",
     isActive: true,
     categories: [],

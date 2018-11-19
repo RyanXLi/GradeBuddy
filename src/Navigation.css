@@ -27,14 +27,16 @@
 
     border-right: 1px solid var(--theme-grey);
     padding: 10px;
+    --item-padding: .25em;
 }
 
-.Navigation-sidebar div {
-    padding: .25em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
+.Navigation-sidebar-heading {
+    padding: var(--item-padding);
+    cursor: pointer;
+}
+
+.Navigation-sidebar-heading:hover {
+    text-decoration: underline;
 }
 
 .Navigation-sidebar-active-heading {
@@ -48,14 +50,24 @@
     margin-top: 20px;
 }
 
-.Navigation-sidebar-course, .Navigation-sidebar-course-selected {
-    border-radius: .25em;
-    padding-left: 1em;
+.Navigation-sidebar .btn-group-vertical {
+    width: 100%;
 }
 
-.Navigation-sidebar-course-selected {
-    font-weight: bold;
-    background-color: var(--theme-selected);
+.Navigation-sidebar-course {
+    /* Add a little more left padding for indentation */
+    padding: var(--item-padding) var(--item-padding) var(--item-padding) 1em;
+    text-align: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.Navigation-add-course-button {
+    position: sticky;
+    bottom: 5px;
+    margin-top: 30px;
 }
 
 .Navigation-sidebar-opener {
