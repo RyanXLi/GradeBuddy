@@ -6,9 +6,14 @@ import { NothingSelectedPane } from './NothingSelectedPane';
 
 import './Navigation.css';
 
+/**
+ * Top level navigation for the app.  Includes nav bar and side bar, and renders the main content pane.
+ * 
+ * @author Silas Hsu
+ */
 export class Navigation extends React.Component {
     static propTypes = {
-        courses: PropTypes.arrayOf(PropTypes.object)
+        courses: PropTypes.arrayOf(PropTypes.object) // Array of Course objects to manage
     };
 
     static defaultProps = {
@@ -23,19 +28,37 @@ export class Navigation extends React.Component {
             isSidebarOpen: true,
         };
 
-        this.toggleBooleanState = this.toggleBooleanState.bind(this);
+        this.showAddCoursesPane = this.showAddCoursesPane.bind(this);
     }
 
-    toggleBooleanState(stateName) {
-        this.setState(prevState => {
-            return {[stateName]: !prevState[stateName]}
+    /**
+     * Sets state to deselects any selected class and show the new class pane.
+     */
+    showAddCoursesPane() {
+        this.setState({
+            isAddingCourse: true,
+            selectedCourse: ''
         });
     }
 
+    /**
+     * Sets state to select a course.
+     * 
+     * @param {Course} course - course object
+     */
     setSelectedCourse(course) {
-        this.setState({selectedCourse: course.id});
+        this.setState({
+            isAddingCourse: false,
+            selectedCourse: course.id
+        });
     }
 
+    /**
+     * Renders a selectable list of courses.
+     * 
+     * @param {Course[]} courses - array of courses to render
+     * @return {JSX.Element} elements to render
+     */
     renderCourseGroup(courses) {
         const courseElements = courses.map(course => {
             let className;
@@ -44,6 +67,7 @@ export class Navigation extends React.Component {
             } else {
                 className = 'btn btn-light hoverable Navigation-sidebar-course';
             }
+
             return <button
                 key={course.id}
                 className={className}
@@ -53,9 +77,14 @@ export class Navigation extends React.Component {
                 {course.shortName}
             </button>;
         });
-        return <div className='btn-group-vertical'>{courseElements}</div>
+        return <div className='btn-group-vertical'>{courseElements}</div>;
     }
 
+    /**
+     * Renders the sidebar of the app.
+     * 
+     * @return {JSX.Element} element to render
+     */
     renderSidebar() {
         const [activeCourses, inactiveCourses] = _.partition(this.props.courses, course => course.isActive);
         return <div className='Navigation-sidebar' style={{display: this.state.isSidebarOpen ? undefined : 'none'}}>
@@ -74,11 +103,26 @@ export class Navigation extends React.Component {
                 {this.renderCourseGroup(inactiveCourses)}
             </CollapseWithHeading>
 
-            <button className='btn btn-primary btn-block Navigation-add-course-button'>Add new class</button>
+            <button
+                className='btn btn-primary btn-block Navigation-add-course-button'
+                onClick={this.showAddCoursesPane}
+            >
+                <i className="fas fa-plus" /> Add new class
+            </button>
         </div>;
     }
 
     render() {
+        const selectedCourse = this.props.courses.find(course => course.id === this.state.selectedCourse);
+        let contentPane;
+        if (selectedCourse) {
+            contentPane = 'Course pane for ' + selectedCourse.longName;
+        } else if (this.state.isAddingCourse) {
+            contentPane = 'New class pane';
+        } else {
+            contentPane = <NothingSelectedPane />;
+        }
+
         return <div className='Navigation'>
             <nav className='navbar navbar-expand-lg navbar-light Navigation-navbar'>
                 <div className='navbar-brand'>Grade buddy</div>
@@ -91,9 +135,7 @@ export class Navigation extends React.Component {
                 >
                     {this.state.isSidebarOpen ? '‹' : '›'}
                 </div>
-                <div className='Navigation-content-pane'>
-                    <NothingSelectedPane />
-                </div>
+                <div className='Navigation-content-pane'>{contentPane}</div>
             </div>
         </div>
     }

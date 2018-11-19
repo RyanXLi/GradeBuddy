@@ -1,6 +1,11 @@
 import React from 'react';
 import './NothingSelectedPane.css';
 
+/**
+ * Content pane explaining that no class or function is selected.
+ * 
+ * @author Silas Hsu
+ */
 export function NothingSelectedPane() {
     return <div className='NothingSelectedPane'>
         <span className='NothingSelectedPane-inner'>

@@ -2,11 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Collapse } from 'reactstrap';
 
+/**
+ * A simple heading, that when clicked, toggles visibility of content under it.  Set heading text and styling via props,\
+ * and content via children.
+ * 
+ * @author Silas Hsu
+ */
 export class CollapseWithHeading extends React.Component {
     static propTypes = {
-        headingText: PropTypes.string,
-        headingClassName: PropTypes.string,
-        initialIsOpen: PropTypes.bool
+        headingText: PropTypes.string, // Text of the heading
+        headingClassName: PropTypes.string, // CSS class of the heading
+        initialIsOpen: PropTypes.bool // Whether content is initially visible
     };
 
     static defaultProps = {
@@ -23,6 +29,9 @@ export class CollapseWithHeading extends React.Component {
         this.toggleOpenState = this.toggleOpenState.bind(this);
     }
 
+    /**
+     * Sets state to toggle content visibility.
+     */
     toggleOpenState() {
         this.setState(prevState => {
             return {isOpen: !prevState.isOpen};
