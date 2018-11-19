@@ -29,6 +29,7 @@ export class Navigation extends React.Component {
         };
 
         this.showAddCoursesPane = this.showAddCoursesPane.bind(this);
+        this.toggleSidebar = this.toggleSidebar.bind(this);
     }
 
     /**
@@ -50,6 +51,15 @@ export class Navigation extends React.Component {
         this.setState({
             isAddingCourse: false,
             selectedCourse: course.id
+        });
+    }
+
+    /**
+     * Sets state to toggle visibility of the sidebar.
+     */
+    toggleSidebar() {
+        this.setState(prevState => {
+            return {isSidebarOpen: !prevState.isSidebarOpen};
         });
     }
 
@@ -129,10 +139,7 @@ export class Navigation extends React.Component {
             </nav>
             <div className='Navigation-main-container'>
                 {this.renderSidebar()}
-                <div
-                    className='Navigation-sidebar-opener hoverable'
-                    onClick={() => this.toggleBooleanState('isSidebarOpen')}
-                >
+                <div className='Navigation-sidebar-opener hoverable' onClick={this.toggleSidebar}>
                     {this.state.isSidebarOpen ? '‹' : '›'}
                 </div>
                 <div className='Navigation-content-pane'>{contentPane}</div>
