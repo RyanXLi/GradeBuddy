@@ -3,9 +3,6 @@
  */
 
 import React, { Component } from 'react';
-import logo from './logo.svg';
-// import '../public/bootstrap.min.css';
-
 
 
 class NewClassPage extends Component {
