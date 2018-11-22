@@ -1,11 +1,10 @@
-
 import React, { Component } from 'react';
 
+import './AssignmentCategoryItem.css';
 
-class AssCategoryItem extends Component {
-
-    constructor() {
-        super();
+export class AssignmentCategoryItem extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
             checked: false
         };
@@ -64,5 +63,3 @@ class AssCategoryItem extends Component {
         );
     }
 }
-
-export default AssCategoryItem;

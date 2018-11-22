@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { CollapseWithHeading } from './CollapseWithHeader';
 import { NothingSelectedPane } from './NothingSelectedPane';
+import { NewCoursePage } from './NewCoursePage/NewCoursePage';
 
 import './Navigation.css';
 
@@ -128,7 +129,7 @@ export class Navigation extends React.Component {
         if (selectedCourse) {
             contentPane = 'Course pane for ' + selectedCourse.longName;
         } else if (this.state.isAddingCourse) {
-            contentPane = 'New class pane';
+            contentPane = <NewCoursePage />;
         } else {
             contentPane = <NothingSelectedPane />;
         }

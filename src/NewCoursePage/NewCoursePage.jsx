@@ -3,13 +3,13 @@
  */
 
 import React, { Component } from 'react';
-import AssCategoryItem from "./AssCategoryItem";
+import { AssignmentCategoryItem } from './AssignmentCategoryItem';
 
+import './NewCoursePage.css';
 
-class NewClassPage extends Component {
-
-    constructor() {
-        super();
+export class NewCoursePage extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
             courseTitle: '',
             courseSubject: '',
@@ -70,7 +70,7 @@ class NewClassPage extends Component {
         let assCategoryItems = [];
         for (let i = 0; i < this.state.categories.length; i++) {
             assCategoryItems.push(
-                <AssCategoryItem key={i.toString()} index={i} item={this.state.categories[i]} setItem={this.setItem}/>
+                <AssignmentCategoryItem key={i.toString()} index={i} item={this.state.categories[i]} setItem={this.setItem}/>
             );
         }
 
@@ -147,10 +147,6 @@ class NewClassPage extends Component {
                 </div>
             </div>
             </div>
-    );
+        );
     }
-    }
-
-    // TODO: silas please add export where appropriate, note that
-    // TODO: `this.state` is close to the object described in the schema
-    export default NewClassPage;
+}
