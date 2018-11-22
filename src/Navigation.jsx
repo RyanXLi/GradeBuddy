@@ -14,11 +14,18 @@ import './Navigation.css';
  */
 export class Navigation extends React.Component {
     static propTypes = {
-        courses: PropTypes.arrayOf(PropTypes.object) // Array of Course objects to manage
+        courses: PropTypes.arrayOf(PropTypes.object), // Array of Course objects to manage
+        /**
+         * Callback when a course is added, signature (newCourse: Course): void
+         * 
+         * @param {Course} newCourse - new course data
+         */
+        onCourseAdded: PropTypes.func
     };
 
     static defaultProps = {
-        courses: []
+        courses: [],
+        onCourseAdded: _.noop
     };
 
     constructor(props) {
@@ -30,6 +37,7 @@ export class Navigation extends React.Component {
         };
 
         this.showAddCoursesPane = this.showAddCoursesPane.bind(this);
+        this.handleCourseAdd = this.handleCourseAdd.bind(this);
         this.toggleSidebar = this.toggleSidebar.bind(this);
     }
 
@@ -53,6 +61,16 @@ export class Navigation extends React.Component {
             isAddingCourse: false,
             selectedCourse: course.id
         });
+    }
+
+    /**
+     * Handles adding a new course.  Sets the selected course to be the new one and calls the `onCourseAdded` callback.
+     * 
+     * @param {Course} course - course data that was added
+     */
+    handleCourseAdd(course) {
+        this.setSelectedCourse(course);
+        this.props.onCourseAdded(course);
     }
 
     /**
@@ -127,9 +145,11 @@ export class Navigation extends React.Component {
         const selectedCourse = this.props.courses.find(course => course.id === this.state.selectedCourse);
         let contentPane;
         if (selectedCourse) {
-            contentPane = 'Course pane for ' + selectedCourse.longName;
+            contentPane = `Course pane for ${selectedCourse.longName}.  I've logged the course data to the web ` +
+                'browser developer console.  Cheers!  -Silas';
+            console.log(selectedCourse);
         } else if (this.state.isAddingCourse) {
-            contentPane = <NewCoursePage />;
+            contentPane = <NewCoursePage onCourseSaved={this.handleCourseAdd} />;
         } else {
             contentPane = <NothingSelectedPane />;
         }

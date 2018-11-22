@@ -3,6 +3,7 @@
  */
 
 import React, { Component } from 'react';
+import uuid from 'uuid/v4';
 import { AssignmentCategoryItem } from './AssignmentCategoryItem';
 
 import './NewCoursePage.css';
@@ -11,6 +12,7 @@ export class NewCoursePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: uuid(),
             courseTitle: '',
             courseSubject: '',
             courseCode: '',
@@ -141,7 +143,7 @@ export class NewCoursePage extends Component {
                     </div>
 
                     <div className="buttons">
-                        <button type="submit" className="btn btn-primary save-button">SAVE</button>
+                        <button type="submit" className="btn btn-primary save-button" onClick={() => this.props.onCourseSaved(this.state)}>SAVE</button>
                         <button type="cancel" className="btn btn-light cancel-button">CANCEL</button>
                     </div>
                 </div>

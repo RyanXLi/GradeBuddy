@@ -35,10 +35,24 @@ class App extends Component {
         this.state = {
             courses: [COURSE, COURSE2, COURSE3]
         };
+        this.handleCourseAdd = this.handleCourseAdd.bind(this);
+    }
+
+    /**
+     * Sets state to add a course.
+     * 
+     * @param {Course} course - course object to add
+     */
+    handleCourseAdd(course) {
+        this.setState(prevState => {
+            const nextCourses = prevState.courses.slice();
+            nextCourses.push(course);
+            return {courses: nextCourses};
+        });
     }
 
     render() {
-        return <Navigation courses={this.state.courses} />;
+        return <Navigation courses={this.state.courses} onCourseAdded={this.handleCourseAdd} />;
     }
 }
 

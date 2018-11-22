@@ -4,8 +4,9 @@ Those making the new class page, expect to EXPORT an object with this schema.
 Those making the assignment page or class homepage, expect to GET an object with this schema.
 
 {
-    shortClassName: string,
-    longClassName: string,
+    id: string,
+    shortName: string,
+    longName: string,
     isActive: boolean,
     categories: [ // Array of objects with this schema, empty at first
         {
