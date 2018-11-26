@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { CollapseWithHeading } from './CollapseWithHeader';
 import { NothingSelectedPane } from './NothingSelectedPane';
 import { NewCoursePage } from './NewCoursePage/NewCoursePage';
+import { CourseHomePage } from './CourseHomePage/CourseHomePage';
 
 import './Navigation.css';
 
@@ -145,8 +146,7 @@ export class Navigation extends React.Component {
         const selectedCourse = this.props.courses.find(course => course.id === this.state.selectedCourse);
         let contentPane;
         if (selectedCourse) {
-            contentPane = `Course pane for ${selectedCourse.longName}.  I've logged the course data to the web ` +
-                'browser developer console.  Cheers!  -Silas';
+            contentPane = <CourseHomePage />;
             console.log(selectedCourse);
         } else if (this.state.isAddingCourse) {
             contentPane = <NewCoursePage onCourseSaved={this.handleCourseAdd} />;
