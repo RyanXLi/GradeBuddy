@@ -1,4 +1,6 @@
 import React from 'react';
+import { CollapseWithHeading } from '../CollapseWithHeader';
+
 import './CourseHomePage.css';
 
 /**
@@ -6,11 +8,10 @@ import './CourseHomePage.css';
  * 
  * @author Srilakshmi Prasad
  */
-
-export function CourseHomePage() {
+export function CourseHomePage(props) {
     return <div className='CourseHomePage'>
-        <span className='CourseHomePage-inner'>
-            Now displaying INSERT COURSE NAME
-        </span>
+        <CollapseWithHeading headingText='asdf'>
+            {props.selectedCourse.longName}
+        </CollapseWithHeading>
     </div>;
 }

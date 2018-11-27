@@ -146,7 +146,7 @@ export class Navigation extends React.Component {
         const selectedCourse = this.props.courses.find(course => course.id === this.state.selectedCourse);
         let contentPane;
         if (selectedCourse) {
-            contentPane = <CourseHomePage />;
+            contentPane = <CourseHomePage selectedCourse={selectedCourse} />;
             console.log(selectedCourse);
         } else if (this.state.isAddingCourse) {
             contentPane = <NewCoursePage onCourseSaved={this.handleCourseAdd} />;
