@@ -32,8 +32,11 @@ export class NewCoursePage extends Component {
             //         weight: number
             //     }
             assignments: [ ],
+            newACName: '',
+            newACWeight: 0.0,
         };
         this.setItem = this.setItem.bind(this);
+        this.onModalSaved = this.onModalSaved.bind(this);
     }
 
     updateCourseTitle(evt) {
@@ -57,12 +60,39 @@ export class NewCoursePage extends Component {
         // console.log(this.state.courseCode);
     }
 
+    updateACName(evt) {
+        this.setState({
+            newACName: evt.target.value
+        });
+
+    }
+
+    updateACWeight(evt) {
+        this.setState({
+            newACWeight: evt.target.value
+        });
+
+    }
+
 
     setItem(i, obj) {
         const copy = this.state.categories.slice();
         copy[i] = obj;
         this.setState({
             categories: copy
+        });
+    }
+
+    onModalSaved() {
+        const copy = this.state.categories.slice();
+        copy.push({
+            name: this.state.newACName,
+            weight: 0.0,
+        });
+        this.setState({
+            categories: copy,
+            newACName: '',
+            newACWeight: ''
         });
     }
 
@@ -79,6 +109,8 @@ export class NewCoursePage extends Component {
                                         setItem={this.setItem}/>
             );
         }
+
+
 
         return (
             <div>
@@ -128,9 +160,50 @@ export class NewCoursePage extends Component {
                         <div className="assignment-category-grid-container">
                             {assCategoryItems}
                             <div className="assignment-category-grid-item">
-                                <button type="submit" className="add-button btn btn-primary save-button">
+                                <button type="submit" 
+                                        className="add-button btn btn-primary save-button" 
+                                        data-toggle="modal" 
+                                        data-target="#exampleModalCenter">
                                     <div className="inner-box">+</div>
                                 </button>
+                                
+                                <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div className="modal-dialog modal-dialog-centered" role="document">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title" id="exampleModalLongTitle">New Assignment Category</h5>
+                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div className="modal-body">
+
+                                                <form>
+                                                    <div >
+                                                        <label htmlFor="courseTitle">Name</label>
+                                                        <input className="form-control"
+                                                               id="courseTitle"
+                                                               value={this.state.newACName}
+                                                               onChange={evt => this.updateACName(evt)}
+                                                               placeholder="MPs"/>
+                                                    </div>
+                                                    {/*<div >*/}
+                                                        {/*<label htmlFor="courseSubject">Weight</label>*/}
+                                                        {/*<input className="form-control" id="courseSubject"*/}
+
+                                                               {/*onChange={evt => this.updateACWeight(evt)}*/}
+                                                               {/*placeholder="20" />*/}
+                                                    {/*</div>*/}
+
+                                                </form>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" className="btn btn-primary" onClick={() => this.onModalSaved()} data-dismiss="modal">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </CollapseWithHeading>
