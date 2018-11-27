@@ -21,6 +21,7 @@ export class CourseHomePage extends React.Component {
 			return <HabitPage />;
 		}
 
+		//EDIT HABIT should be clickable and lead to HabitPage, passing correct params
 		return <div className='CourseHomePage' style={{flexDirection: 'column', alignItems: 'flex-start'}}>
 	    	<div style={{marginBottom:50}}>
 	    		{this.props.selectedCourse.shortName}
