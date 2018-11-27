@@ -13,11 +13,8 @@ export class NewCoursePage extends Component {
         super(props);
         this.state = {
             id: uuid(),
-            courseTitle: '',
-            courseSubject: '',
-            courseCode: '',
-            // shortName: null, // string
-            // longName: null, // string
+            longName: '',
+            shortName: '',
             isActive: true, // boolean
             categories: [
                 {name: 'Homework', weight: 0.0},
@@ -43,19 +40,13 @@ export class NewCoursePage extends Component {
         // console.log(this.state.courseTitle);
     }
 
-    updateCourseSubject(evt) {
+    updateShortName(evt) {
         this.setState({
-            courseSubject: evt.target.value
+            shortName: evt.target.value
         });
-        // console.log(this.state.courseSubject);
+
     }
 
-    updateCourseCode(evt) {
-        this.setState({
-            courseCode: evt.target.value
-        });
-        // console.log(this.state.courseCode);
-    }
 
 
     setItem(i, obj) {
@@ -93,28 +84,23 @@ export class NewCoursePage extends Component {
                     >
 
 
-                        <form className="assignment-category-grid-container class-info-div">
-                            <div className="form-group two-column">
-                                <label htmlFor="courseTitle">Course Title *</label>
+                        <form className="section class-info-div">
+                            <div >
+                                <label htmlFor="shortName">Course Name *</label>
+                                <input className="form-control" id="shortName"
+                                       value={this.state.shortName}
+                                       onChange={evt => this.updateShortName(evt)}
+                                       placeholder="CS241" />
+                            </div>
+                            <div >
+                                <label htmlFor="courseTitle">Course Title</label>
                                 <input className="form-control" id="courseTitle"
                                        value={this.state.courseTitle}
                                        onChange={evt => this.updateCourseTitle(evt)}
                                        placeholder="System Programming"/>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="courseSubject">Course Subject</label>
-                                <input className="form-control" id="courseSubject"
-                                       value={this.state.courseSubject}
-                                       onChange={evt => this.updateCourseSubject(evt)}
-                                       placeholder="CS" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="courseCode">Course Code</label>
-                                <input className="form-control" id="courseCode"
-                                       value={this.state.courseCode}
-                                       onChange={evt => this.updateCourseCode(evt)}
-                                       placeholder="241" />
-                            </div>
+
+
                         </form>
 
                     </CollapseWithHeading>
@@ -125,7 +111,7 @@ export class NewCoursePage extends Component {
                         headingText='Assignment Categories'
                         headingClassName='Navigation-sidebar-heading Navigation-sidebar-active-heading'
                     >
-                        <div className="assignment-category-grid-container">
+                        <div className="assignment-category-grid-container section">
                             {assCategoryItems}
                             <div className="assignment-category-grid-item">
                                 <button type="submit" className="add-button btn btn-primary save-button">
