@@ -1,0 +1,30 @@
+.Scatterplot {
+    display: inline-block;
+}
+
+.Scatterplot-svg {
+    overflow: visible;
+    margin: 20px 25px;
+}
+
+.Scatterplot-circle {
+    color: 'cadetblue';
+    opacity: 0.7;
+}
+
+.Scatterplot-x-label {
+    float: right;
+}
+
+.Scatterplot-y-label {
+    float: left;
+    writing-mode: vertical-rl;
+}
+
+.Scatterplot-tooltip {
+    max-width: 120px;
+    border: 1px solid grey;
+    padding: 5px;
+    background-color: white;
+    font-size: smaller;
+}
