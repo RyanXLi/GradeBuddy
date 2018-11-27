@@ -40,23 +40,27 @@ export class AssignmentCategoryItem extends Component {
     render() {
 
         const weight = this.state.checked
-            ? <div className="input-group mb-3">
+            ? <span className="input-group mb-3 weight-input">
                 <div className="input-group-prepend">
                     <span className="input-group-text">Weight: </span>
                 </div>
-                <input type="text" className="form-control" onChange={evt => this.handleWeightChange(evt)}   />
+                <input type="text"
+                       className="form-control"
+                       onChange={evt => this.handleWeightChange(evt)}   />
                 <div className="input-group-append">
                     <span className="input-group-text">%</span>
                 </div>
-              </div>
+              </span>
             : null;
 
         return (
-            <div>
-                <input type="checkbox"
-                       checked={ this.state.checked }
-                       onChange={ this.handleCheckedChange }/>
-                <span>{this.props.item.name}</span>
+            <div className="weight">
+                <span className="weight-name">
+                    <input type="checkbox"
+                           checked={ this.state.checked }
+                           onChange={ this.handleCheckedChange }/>
+                    <span>{this.props.item.name}</span>
+                </span>
 
                 {weight}
             </div>

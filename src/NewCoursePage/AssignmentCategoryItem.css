@@ -1,0 +1,12 @@
+.weight-input {
+    width: 35%;
+}
+
+.weight-name {
+    width: 35%;
+    float: left;
+}
+
+.weight {
+    height: 35px;
+}
