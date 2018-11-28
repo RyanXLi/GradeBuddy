@@ -8,19 +8,44 @@ const COURSE = {
     shortName: "CS125",
     longName: "CS125 Intro to Computer Science",
     isActive: true,
-    categories: [],
+    categories: [
+        {
+            name: 'Homework',
+            weight: .3
+        },
+        {
+            name: 'Exams',
+            weight: .5
+        }
+    ],
     assignments: [ // Array of objects with this schema, empty at first
         {
+            id: uuid(),
             name: "HW1",
             weight: 0, // If 0, use default weight
-            pointsEarned: 80,
+            pointsEarned: 7,
+            pointsPossible: 8,
+            category: "Homework",
+            habits: {}
+        },
+        {
+            id: uuid(),
+            name: "HW2",
+            weight: 0, // If 0, use default weight
+            pointsEarned: 12,
+            pointsPossible: 12,
+            category: "Homework",
+            habits: {}
+        },
+        {
+            id: uuid(),
+            name: "Exam 1",
+            weight: 0, // If 0, use default weight
+            pointsEarned: 85,
             pointsPossible: 100,
-            category: "Homeworks",
-            habits: {
-                stat1: 0,
-                stat2: 0,
-            }
-        }
+            category: "Exams",
+            habits: {}
+        },
     ]
 };
 const COURSE2 = _.clone(COURSE);
