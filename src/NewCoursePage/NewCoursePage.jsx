@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
 import { AssignmentCategoryItem } from './AssignmentCategoryItem';
-
+import { CollapseWithHeading } from '../CollapseWithHeader';
 import './NewCoursePage.css';
 
 export class NewCoursePage extends Component {
@@ -13,11 +13,8 @@ export class NewCoursePage extends Component {
         super(props);
         this.state = {
             id: uuid(),
-            courseTitle: '',
-            courseSubject: '',
-            courseCode: '',
-            // shortName: null, // string
-            // longName: null, // string
+            longName: '',
+            shortName: '',
             isActive: true, // boolean
             categories: [
                 {name: 'Homework', weight: 0.0},
@@ -32,8 +29,11 @@ export class NewCoursePage extends Component {
             //         weight: number
             //     }
             assignments: [ ],
+            newACName: '',
+            newACWeight: 0.0,
         };
         this.setItem = this.setItem.bind(this);
+        this.onModalSaved = this.onModalSaved.bind(this);
     }
 
     updateCourseTitle(evt) {
@@ -43,19 +43,27 @@ export class NewCoursePage extends Component {
         // console.log(this.state.courseTitle);
     }
 
-    updateCourseSubject(evt) {
+    updateShortName(evt) {
         this.setState({
-            courseSubject: evt.target.value
+            shortName: evt.target.value
         });
-        // console.log(this.state.courseSubject);
+
     }
 
-    updateCourseCode(evt) {
+    updateACName(evt) {
         this.setState({
-            courseCode: evt.target.value
+            newACName: evt.target.value
         });
-        // console.log(this.state.courseCode);
+
     }
+
+    updateACWeight(evt) {
+        this.setState({
+            newACWeight: evt.target.value
+        });
+
+    }
+
 
 
     setItem(i, obj) {
@@ -66,85 +74,132 @@ export class NewCoursePage extends Component {
         });
     }
 
+    onModalSaved() {
+        const copy = this.state.categories.slice();
+        copy.push({
+            name: this.state.newACName,
+            weight: 0.0,
+        });
+        this.setState({
+            categories: copy,
+            newACName: '',
+            newACWeight: ''
+        });
+    }
+
 
     render() {
 
         let assCategoryItems = [];
         for (let i = 0; i < this.state.categories.length; i++) {
             assCategoryItems.push(
-                <AssignmentCategoryItem key={i.toString()} index={i} item={this.state.categories[i]} setItem={this.setItem}/>
+                <AssignmentCategoryItem className="assignment-category-grid-item"
+                                        key={i.toString()}
+                                        index={i}
+                                        item={this.state.categories[i]}
+                                        setItem={this.setItem}/>
             );
         }
+
+
 
         return (
             <div>
             <div className="NewClassPage">
                 <div className="title">Add new class</div>
                 <div className="content">
-                    <div className="accordions">
-                        <div className="accordion" id="accordionExample">
-                            <div className="card">
-                                <div className="card-header" id="headingOne">
-                                    <h5 className="mb-0">
-                                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Class Information
-                                        </button>
-                                    </h5>
-                                </div>
-
-                                <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" >
-                                    <div className="card-body">
 
 
-
-                                        <form>
-                                            <div className="form-group">
-                                                <label htmlFor="courseTitle">Course Title</label>
-                                                <input className="form-control" id="courseTitle" value={this.state.courseTitle} onChange={evt => this.updateCourseTitle(evt)} placeholder="System Programming"/>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="courseSubject">Course Subject</label>
-                                                <input className="form-control" id="courseSubject" value={this.state.courseSubject} onChange={evt => this.updateCourseSubject(evt)} placeholder="CS" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="courseCode">Course Code</label>
-                                                <input className="form-control" id="courseCode" value={this.state.courseCode} onChange={evt => this.updateCourseCode(evt)} placeholder="241" />
-                                            </div>
-                                        </form>
+                    <CollapseWithHeading
+                        headingText='Class Information'
+                        headingClassName='Navigation-sidebar-heading Navigation-sidebar-active-heading'
+                    >
 
 
-
-
-
-                                    </div>
-                                </div>
+                        <form className="section class-info-div">
+                            <div >
+                                <label htmlFor="shortName">Course Name *</label>
+                                <input className="form-control" id="shortName"
+                                       value={this.state.shortName}
+                                       onChange={evt => this.updateShortName(evt)}
+                                       placeholder="CS241" />
                             </div>
-                            <div className="card">
-                                <div className="card-header" id="headingTwo">
-                                    <h5 className="mb-0">
-                                        <button className="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                            Assignment Categories
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" >
-                                    <div className="card-body">
+                            <div >
+                                <label htmlFor="courseTitle">Course Title</label>
+                                <input className="form-control" id="courseTitle"
+                                       value={this.state.courseTitle}
+                                       onChange={evt => this.updateCourseTitle(evt)}
+                                       placeholder="System Programming"/>
+                            </div>
+
+
+                        </form>
+
+                    </CollapseWithHeading>
 
 
 
-                                        {assCategoryItems}
-                                        <button type="submit" className="btn btn-primary save-button">Add</button>
+                    <CollapseWithHeading
+                        headingText='Assignment Categories'
+                        headingClassName='Navigation-sidebar-heading Navigation-sidebar-active-heading'
+                    >
+                        <div className="assignment-category-grid-container section">
+                            {assCategoryItems}
+                            <div className="assignment-category-grid-item">
+                                <button type="submit" 
+                                        className="add-button btn btn-primary save-button" 
+                                        data-toggle="modal" 
+                                        data-target="#exampleModalCenter">
+                                    <div className="inner-box">+</div>
+                                </button>
+                                
+                                <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div className="modal-dialog modal-dialog-centered" role="document">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title" id="exampleModalLongTitle">New Assignment Category</h5>
+                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div className="modal-body">
 
+                                                <form>
+                                                    <div >
+                                                        <label htmlFor="courseTitle">Name</label>
+                                                        <input className="form-control"
+                                                               id="courseTitle"
+                                                               value={this.state.newACName}
+                                                               onChange={evt => this.updateACName(evt)}
+                                                               placeholder="MPs"/>
+                                                    </div>
+                                                    {/*<div >*/}
+                                                        {/*<label htmlFor="courseSubject">Weight</label>*/}
+                                                        {/*<input className="form-control" id="courseSubject"*/}
 
+                                                               {/*onChange={evt => this.updateACWeight(evt)}*/}
+                                                               {/*placeholder="20" />*/}
+                                                    {/*</div>*/}
+
+                                                </form>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" className="btn btn-primary" onClick={() => this.onModalSaved()} data-dismiss="modal">Save</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </CollapseWithHeading>
+
 
                     <div className="buttons">
-                        <button type="submit" className="btn btn-primary save-button" onClick={() => this.props.onCourseSaved(this.state)}>SAVE</button>
-                        <button type="cancel" className="btn btn-light cancel-button">CANCEL</button>
+                        <button type="submit" className="submit-button btn btn-primary save-button"
+                                onClick={() => this.props.onCourseSaved(this.state)}>SAVE</button>
+
+                        <button type="cancel" className="cancel-button btn btn-light cancel-button">CANCEL</button>
                     </div>
                 </div>
             </div>
