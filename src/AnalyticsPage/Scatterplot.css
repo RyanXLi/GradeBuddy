@@ -22,9 +22,18 @@
 }
 
 .Scatterplot-tooltip {
-    max-width: 120px;
+    max-width: 200px;
     border: 1px solid grey;
     padding: 5px;
     background-color: white;
     font-size: smaller;
+}
+
+.Scatterplot-tooltip-x-label {
+    font-weight: bold;
+}
+
+.Scatterplot-no-data-message {
+    font-style: italic;
+    fill: var(--theme-grey);
 }

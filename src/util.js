@@ -24,3 +24,21 @@ export function getRelativeCoordinates(event, relativeTo) {
         y: event.clientY - targetBoundingRect.top
     };
 }
+
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+/**
+ * Calculates the difference of the two Dates in days.  This function returns positive numbers if a is after b.
+ * 
+ * @param {Date} a - the first Date
+ * @param {Date} b - the second Date
+ * @return {number} the difference (a - b) of the two Dates in days
+ * @author {Shyam Habarakada from StackOverflow}
+ */
+export function dateDiffInDays(a, b) {
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc1 - utc2) / _MS_PER_DAY);
+}

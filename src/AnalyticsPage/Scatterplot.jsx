@@ -19,7 +19,6 @@ export class Scatterplot extends React.Component {
         width: PropTypes.number.isRequired,
         height: PropTypes.number.isRequired,
         xLabel: PropTypes.string,
-        yLabel: PropTypes.string,
         getPointTooltip: PropTypes.func
     };
 
@@ -27,8 +26,7 @@ export class Scatterplot extends React.Component {
         data: [],
         width: 600,
         height: 375,
-        xLabel: 'X',
-        yLabel: 'Y'
+        xLabel: 'X'
     };
 
     constructor(props) {
@@ -93,9 +91,21 @@ export class Scatterplot extends React.Component {
     }
 
     renderPoints() {
-        const {xScale, yScale} = this.getScales(this.props);
+        const data = this.props.data;
+        if (data.length === 0) {
+            const {width, height} = this.props;
+            return <text
+                className='Scatterplot-no-data-message'
+                x={0.5 * width}
+                y={0.5 * height}
+                textAnchor='middle'
+            >
+                No data
+            </text>;
+        }
         
-        return this.props.data.map((point, i) => <circle
+        const {xScale, yScale} = this.getScales(this.props);
+        return data.map((point, i) => <circle
             key={i}
             cx={xScale(point[0])}
             cy={yScale(point[1])}
@@ -141,7 +151,7 @@ export class Scatterplot extends React.Component {
     }
 
     renderRegressionTooltip() {
-        const {xLabel, yLabel, regressionResult} = this.props;
+        const {xLabel, regressionResult} = this.props;
         const location = this.state.regressionTooltipLocation;
         if (!location || !regressionResult) {
             return null;
@@ -149,17 +159,16 @@ export class Scatterplot extends React.Component {
 
         const xValue = this.getScales(this.props).xScale.invert(location.x);
         const yPrediction = regressionResult.predict(xValue)[1];
-        return <Tooltip x={location.pageX} y={location.pageY} >
-            <p>Prediction for {xLabel}={xValue.toFixed(2)}:</p>
-            <div>{yLabel}={yPrediction.toFixed(2)}</div>
+        return <Tooltip x={location.pageX} y={location.pageY}>
+            Predicted grade if <i>{xLabel}</i> is {xValue.toFixed(2)}: <b>{yPrediction.toFixed(0)}%</b>
         </Tooltip>;
     }
 
     render() {
-        const {width, height, xLabel, yLabel} = this.props;
+        const {width, height, xLabel} = this.props;
         return <div className='Scatterplot'>
             <div>
-                <span className='Scatterplot-y-label'>{yLabel}</span>
+                <span className='Scatterplot-y-label'>Grade %</span>
                 <DivWithBullseye style={{display: 'inline-block'}}>
                     <svg className='Scatterplot-svg' width={width} height={height}>
                         <TranslatableG y={height - PADDING_BOT_LEFT} innerRef={node => this.xAxisG = node} />
