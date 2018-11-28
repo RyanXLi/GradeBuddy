@@ -1,7 +1,4 @@
 .CourseHomePage {
-    display: flex;
-    height: 100%;
-    align-items: center;
     color: var(--theme-grey);
     font-style: italic;
 }
