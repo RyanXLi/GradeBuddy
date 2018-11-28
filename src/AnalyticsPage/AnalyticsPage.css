@@ -1,0 +1,30 @@
+.AnalyticsPage {
+    display: flex;
+}
+
+.AnalyticsPage-plot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.AnalyticsPage-options-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.AnalyticsPage-data-source-options {
+    margin-bottom: 50px;
+}
+
+.AnalyticsPage-data-source-options input[type='radio'] {
+    margin-right: 1ch;
+}
+
+.AnalyticsPage-habit-selector {
+    margin-top: 15px;
+}
+
+.AnalyticsPage-habit-selector label {
+    margin-right: 1ch;
+}
