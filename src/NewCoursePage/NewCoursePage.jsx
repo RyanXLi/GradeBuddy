@@ -34,6 +34,7 @@ export class NewCoursePage extends Component {
         };
         this.setItem = this.setItem.bind(this);
         this.onModalSaved = this.onModalSaved.bind(this);
+        this.onSaved = this.onSaved.bind(this);
     }
 
     updateCourseTitle(evt) {
@@ -57,15 +58,6 @@ export class NewCoursePage extends Component {
 
     }
 
-    updateACWeight(evt) {
-        this.setState({
-            newACWeight: evt.target.value
-        });
-
-    }
-
-
-
     setItem(i, obj) {
         const copy = this.state.categories.slice();
         copy[i] = obj;
@@ -85,6 +77,39 @@ export class NewCoursePage extends Component {
             newACName: '',
             newACWeight: ''
         });
+    }
+
+    onSaved() {
+        let valid = true;
+
+        let sum = 0.0;
+        for (let i = 0; i < this.state.categories.length; i++) {
+            if (isNaN(this.state.categories[i]['weight'])) {
+                console.log("nan");
+                valid = false;
+                break;
+            }
+            sum +=  this.state.categories[i]['weight'];
+        }
+
+        const err = 0.00001;
+        console.log(sum);
+        if (sum < 100 - err || sum > 100 + err) {
+            valid = false;
+        }
+
+        console.log(valid);
+
+        if (this.state.shortName === undefined || this.state.shortName === '') {
+            valid = false;
+        }
+
+        if (!valid) {
+            alert("Data incomplete or weight does not sum to 100");
+            return;
+        }
+
+        this.props.onCourseSaved(this.state);
     }
 
 
@@ -196,8 +221,9 @@ export class NewCoursePage extends Component {
 
 
                     <div className="buttons">
+
                         <button type="submit" className="submit-button btn btn-primary save-button"
-                                onClick={() => this.props.onCourseSaved(this.state)}>SAVE</button>
+                                onClick={this.onSaved}>SAVE</button>
 
                         <button type="cancel" className="cancel-button btn btn-light cancel-button">CANCEL</button>
                     </div>

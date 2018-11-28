@@ -32,7 +32,7 @@ export class AssignmentCategoryItem extends Component {
     handleWeightChange(evt) { // TODO: handle invalid input
         this.props.setItem(this.props.index, {
             name: this.props.item.name,
-            weight: evt.target.value,
+            weight: Number(evt.target.value),
         });
     }
 

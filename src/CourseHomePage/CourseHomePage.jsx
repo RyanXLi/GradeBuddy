@@ -27,7 +27,7 @@ export class CourseHomePage extends React.Component {
                 {this.props.selectedCourse.shortName}
             </div>
             <CollapseWithHeading headingText='Homework'>
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <tbody>
                         <tr>
                             <th scope="row">Homework 1 (33%)</th>
@@ -51,7 +51,7 @@ export class CourseHomePage extends React.Component {
                 </table>
             </CollapseWithHeading>
             <CollapseWithHeading headingText='Exam'>
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <tbody>
                         <tr>
                             <th scope="row">Exam 1 (33%)</th>
@@ -75,7 +75,7 @@ export class CourseHomePage extends React.Component {
                 </table>
             </CollapseWithHeading>
             <CollapseWithHeading headingText='Quiz'>
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <tbody>
                         <tr>
                             <th scope="row">Quiz 1 (33%)</th>
