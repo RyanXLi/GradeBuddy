@@ -146,7 +146,8 @@ export class Navigation extends React.Component {
         const selectedCourse = this.props.courses.find(course => course.id === this.state.selectedCourse);
         let contentPane;
         if (selectedCourse) {
-            contentPane = <CourseHomePage selectedCourse={selectedCourse} />;
+            // key={Math.random()} ensures that CourseHomePage's state is reset whenever the selected course changes.
+            contentPane = <CourseHomePage key={Math.random()} selectedCourse={selectedCourse} />;
         } else if (this.state.isAddingCourse) {
             contentPane = <NewCoursePage onCourseSaved={this.handleCourseAdd} />;
         } else {

@@ -1,73 +1,88 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 import './HabitPage.css'
 
 export class HabitPage extends Component {
+    static propTypes = {
+        habits: PropTypes.object.isRequired,
+        onDataSaved: PropTypes.func,
+        onCancel: PropTypes.func
+    };
 
-    constructor() {
-        super();
+    static defaultProps = {
+        onDataSaved: _.noop,
+        onCancel: _.noop
+    };
+
+    constructor(props) {
+        super(props);
         this.state = {
             dateDue: '',
             dateStarted: '',
-            hourSpent: 0,
+            hoursSpent: 0,
             lecturePercentage: 50,
             workedWithPeers: false,
-        }
-        this.handleSlide = this.handleSlide.bind(this);
+            ...props.habits,
+        };
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleSlide(evt) {
-        this.setState({
-            lecturePercentage: evt.target.value,
-        })
+        this.handleSavedPressed = this.handleSavedPressed.bind(this);
+        this.handleCancelPressed = this.handleCancelPressed.bind(this);
     }
 
     handleChange(event, statePropName, isNumber=false) {
-        console.log(event.target.value);
         const newValue = isNumber ? Number(event.target.value) : event.target.value;
         this.setState({[statePropName]: newValue});
+    }
+
+    handleSavedPressed() {
+        this.props.onDataSaved(this.state);
+    }
+
+    handleCancelPressed() {
+        this.props.onCancel();
     }
 
     render() {
         return <div>
             <h1> Edit study habits</h1>
 
-            <div className="form-group">
-                <label htmlFor="Question_startDate">Q1: Date started</label>
-                <input onChange={event => this.handleChange(event, 'dateStarted')} type="date" className="form-control" id="Question_startDate" placeholder="mm/dd/yyyy" />
+            <div className='form-group'>
+                <label htmlFor='Question_startDate'>Q1: Date started</label>
+                <input onChange={event => this.handleChange(event, 'dateStarted')} type='date' className='form-control' id='Question_startDate' placeholder='mm/dd/yyyy' />
             </div>
 
-            <div className="form-group">
-                <label htmlFor="Question_due">Q2: Due date</label>
-                <input onChange={event => this.handleChange(event, 'dateDue')} type="date" className="form-control" id="Question_due" placeholder="mm/dd/yyyy" />
+            <div className='form-group'>
+                <label htmlFor='Question_due'>Q2: Due date</label>
+                <input onChange={event => this.handleChange(event, 'dateDue')} type='date' className='form-control' id='Question_due' placeholder='mm/dd/yyyy' />
             </div>
 
-            <div className="form-group">
-                <label htmlFor="Question_hours">Q3: Total hours spent on this assignment/review? </label>
-                <input onChange={event => this.handleChange(event, 'hourSpent', true)} type="number" className="form-control" id="Question_hours" placeholder="Enter hours" />
+            <div className='form-group'>
+                <label htmlFor='Question_hours'>Q3: Total hours spent on this assignment/review? </label>
+                <input onChange={event => this.handleChange(event, 'hoursSpent', true)} type='number' className='form-control' id='Question_hours' placeholder='Enter hours' />
             </div>
 
-            <div className="form-group">
-                <label htmlFor="Question_lecture">Q4: What % of lectures did you attend for this
+            <div className='form-group'>
+                <label htmlFor='Question_lecture'>Q4: What % of lectures did you attend for this
                     assignment/review? </label>
                 <div style={{display: 'flex', alignItems: 'center'}}>
-                    <input type="range" className="form-control" id="Question_lecture" min="0" max="100" value={this.state.lecturePercentage}
-                            onChange={this.handleSlide}/>
+                    <input type='range' className='form-control' id='Question_lecture' min='0' max='100' value={this.state.lecturePercentage}
+                            onChange={event => this.handleChange(event, 'lecturePercentage', true)}/>
                     <div>{this.state.lecturePercentage}</div>
                 </div>
-
             </div>
 
-            <div className="form-group">
-                <label htmlFor="Question_classmates">Q5: Did you work with classmate(s)?</label>
-                <select className="form-control" id="Question_classmates"
+            <div className='form-group'>
+                <label htmlFor='Question_classmates'>Q5: Did you work with classmate(s)?</label>
+                <select className='form-control' id='Question_classmates'
                         onChange={event => this.handleChange(event, 'workedWithPeers')}>
                     <option>Yes</option>
                     <option>No</option>
                 </select>
             </div>
 
-            <button className="btn btn-primary">Submit</button>
+            <button className='btn btn-primary' onClick={this.handleSavedPressed}>Save</button>
+            <button className='btn btn-light' onClick={this.handleCancelPressed}>Cancel</button>
         </div>;
     }
 }
