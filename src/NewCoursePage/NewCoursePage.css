@@ -1,8 +1,12 @@
 .title {
     font-size: 30px;
-    font-family: "impact";
-    padding: 10px;
-    padding-left: 0px;
+    font-family: "Open Sans";
+    font-weight: bold;
+    padding: 10px 10px 10px 10px;
+}
+
+.content{
+    padding: 0px 0px 0px 10px;
 }
 
 .class-info-div {
@@ -12,13 +16,20 @@
 .section {
     padding: 10px 50px 10px 50px;
 }
+.course-title-section {
+    padding-top:10px;
+}
+.collapse {
+    padding: 10px 0px 20px 0px;
+}
 
+.collapse show {
+    padding-top: 10px;
+}
 .assignment-category-grid-container {
     display: grid;
     grid-template-columns: 50% 50%;
     grid-gap: 10px;
-
-
 }
 
 .assignment-category-grid-item {
@@ -40,6 +51,7 @@
 }
 
 .add-button {
+    margin-left:-5px;
     border-radius: 50%;
     height: 35px;
     width: 35px;

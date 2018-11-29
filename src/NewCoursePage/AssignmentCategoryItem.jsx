@@ -57,6 +57,7 @@ export class AssignmentCategoryItem extends Component {
             <div className="weight">
                 <span className="weight-name">
                     <input type="checkbox"
+                           className="category-checkbox"
                            checked={ this.state.checked }
                            onChange={ this.handleCheckedChange }/>
                     <span>{this.props.item.name}</span>

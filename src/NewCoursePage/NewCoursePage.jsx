@@ -136,6 +136,7 @@ export class NewCoursePage extends Component {
 
 
                     <CollapseWithHeading
+                        className="collapse"
                         headingText='Class Information'
                         headingClassName='Navigation-sidebar-heading Navigation-sidebar-active-heading'
                     >
@@ -149,7 +150,7 @@ export class NewCoursePage extends Component {
                                        onChange={evt => this.updateShortName(evt)}
                                        placeholder="CS241" />
                             </div>
-                            <div >
+                            <div className="course-title-section">
                                 <label htmlFor="courseTitle">Course Title</label>
                                 <input className="form-control" id="courseTitle"
                                        value={this.state.courseTitle}
@@ -173,7 +174,7 @@ export class NewCoursePage extends Component {
                             <div className="assignment-category-grid-item">
                                 <button type="submit" 
                                         className="add-button btn btn-primary save-button" 
-                                        data-toggle="modal" 
+                                        data-toggle="modal"
                                         data-target="#exampleModalCenter">
                                     <div className="inner-box">+</div>
                                 </button>
