@@ -98,8 +98,10 @@ export class CourseHomePage extends React.Component {
             assignment => categoryNames.has(assignment.category) && assignment.category);
 
         return <div className='CourseHomePage'>
-            <div style={{marginBottom:50}}>
-                {this.props.selectedCourse.shortName}
+            <div className='CourseHomePage-title'>
+                {this.props.selectedCourse.longName}
+                <button>Class home</button>
+                <button>Analytics</button>
             </div>
             {course.categories.map(
                 category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
