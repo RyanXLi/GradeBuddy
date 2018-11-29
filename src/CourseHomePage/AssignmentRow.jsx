@@ -40,9 +40,9 @@ export class AssignmentRow extends Component {
     render() {
         const {name, pointsEarned, pointsPossible} = this.props.assignment;
         return (
-            <tr>
+            <tr className='assignmentRow'>
                 <td>
-                    <InlineEdit
+                    <InlineEdit className='assignmentName'
                         text={name}
                         paramName="name"
                         change={data => this.handleChange(data, 'name')}
@@ -51,7 +51,7 @@ export class AssignmentRow extends Component {
                     />
                 </td>
                 <td>
-                    <InlineEdit
+                    <InlineEdit className='assignmentGrade'
                         text={String(pointsEarned)}
                         paramName="pointsEarned"
                         change={data => this.handleChange(data, 'pointsEarned', true)}
@@ -59,7 +59,7 @@ export class AssignmentRow extends Component {
                         activeClassName="pointsEarnedEditing"
                     />
                     /
-                    <InlineEdit
+                    <InlineEdit className='assignmentGrade'
                         text={String(pointsPossible)}
                         paramName="pointsPossible"
                         change={data => this.handleChange(data, 'pointsPossible', true)}
