@@ -11,6 +11,7 @@ import './CourseHomePage.css';
  * Content pane displaying the assignment details of course selected.
  * 
  * @author Srilakshmi Prasad
+ * @author Alex Blacketor
  */
 export class CourseHomePage extends React.Component {
     static propTypes = {
@@ -127,10 +128,10 @@ export class CourseHomePage extends React.Component {
             assignment => categoryNames.has(assignment.category) && assignment.category);
 
         return <div className='CourseHomePage'>
-            <div className='CourseHomePage-title'>
-                {this.props.selectedCourse.longName}
-                <button>Class home</button>
-                <button>Analytics</button>
+            <div className='topBar'>
+                {this.props.selectedCourse.shortName}
+                <button className='classHomeButton'>Class Home</button>
+                <button className='analyticsButton'>Analytics</button>
             </div>
             {course.categories.map(
                 category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
