@@ -16,6 +16,10 @@ const COURSE = {
         {
             name: 'Exams',
             weight: .5
+        },
+        {
+            name: 'Quizzes',
+            weight: .2
         }
     ],
     assignments: [ // Array of objects with this schema, empty at first
@@ -26,39 +30,52 @@ const COURSE = {
             pointsEarned: 7,
             pointsPossible: 8,
             category: "Homework",
-            habits: {}
+            habits: {
+                dateStarted: '05-05-2018',
+                dateDue: '05-06-2018',
+                hoursSpent: 2,
+                lecturePercentage: 75,
+                workedWithPeers: true
+            }
         },
         {
             id: uuid(),
             name: "HW2",
             weight: 0, // If 0, use default weight
-            pointsEarned: 12,
+            pointsEarned: 11,
             pointsPossible: 12,
             category: "Homework",
-            habits: {}
+            habits: {
+                dateStarted: '05-05-2018',
+                dateDue: '05-07-2018',
+                hoursSpent: 3,
+                lecturePercentage: 100,
+                workedWithPeers: true
+            }
         },
         {
             id: uuid(),
             name: "Exam 1",
             weight: 0, // If 0, use default weight
-            pointsEarned: 85,
+            pointsEarned: 100,
             pointsPossible: 100,
             category: "Exams",
-            habits: {}
+            habits: {
+                dateStarted: '05-05-2018',
+                dateDue: '05-10-2018',
+                hoursSpent: 5,
+                lecturePercentage: 90,
+                workedWithPeers: false
+            }
         },
     ]
 };
-const COURSE2 = _.clone(COURSE);
-COURSE2.id = uuid();
-COURSE2.isActive = false;
-const COURSE3 = _.clone(COURSE);
-COURSE3.id = uuid();
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            courses: [COURSE, COURSE2, COURSE3]
+            courses: [COURSE]
         };
         this.handleCoursesChanged = this.handleCoursesChanged.bind(this);
     }
