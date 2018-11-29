@@ -7,7 +7,6 @@ import { HabitPage } from '../HabitPage/HabitPage';
 import { AssignmentRow } from './AssignmentRow';
 import './CourseHomePage.css';
 
-
 /**
  * Content pane displaying the assignment details of course selected.
  * 
@@ -19,6 +18,10 @@ export class CourseHomePage extends React.Component {
         onCourseEdited: PropTypes.func
     };
 
+    static defaultProps = {
+        onCourseEdited: _.noop
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,14 +29,20 @@ export class CourseHomePage extends React.Component {
         };
         this.handleAssignmentAdd = this.handleAssignmentAdd.bind(this);
         this.handleAssignmentSave = this.handleAssignmentSave.bind(this);
+        this.handleAssignmentDelete = this.handleAssignmentDelete.bind(this);
         this.setHabitBeingEdited = this.setHabitBeingEdited.bind(this);
         this.handleHabitSave = this.handleHabitSave.bind(this);
     }
 
+    setNewAssignments(newAssignments) {
+        const courseCopy = _.clone(this.props.selectedCourse);
+        courseCopy.assignments = newAssignments;
+        this.props.onCourseEdited(courseCopy);
+    }
+
     handleAssignmentAdd(category) {
-        const copy = _.clone(this.props.selectedCourse);
-        copy.assignments = this.props.selectedCourse.assignments.slice();
-        copy.assignments.push({
+        const newAssignments = this.props.selectedCourse.assignments.slice();
+        newAssignments.push({
             id: uuid(),
             name: 'New assignment',
             weight: 0, // If 0, use default weight
@@ -42,14 +51,24 @@ export class CourseHomePage extends React.Component {
             category: category,
             habits: {}
         });
+        this.setNewAssignments(newAssignments);
     }
 
     handleAssignmentSave(newAssignment) {
-
+        const assignmentsCopy = this.props.selectedCourse.assignments.slice();
+        const index = assignmentsCopy.findIndex(assignment => assignment.id === newAssignment.id);
+        assignmentsCopy[index] = newAssignment;
+        this.setNewAssignments(assignmentsCopy);
     }
 
-    handleAssignmentDelete(assignment) {
-
+    handleAssignmentDelete(assignmentToDelete) {
+        const assignmentsCopy = this.props.selectedCourse.assignments.slice();
+        const index = assignmentsCopy.findIndex(assignment => assignment.id === assignmentToDelete.id);
+        if (index < 0) {
+            return;
+        }
+        assignmentsCopy.splice(index, 1);
+        this.setNewAssignments(assignmentsCopy);
     }
 
     setHabitBeingEdited(assignment) {
@@ -70,7 +89,7 @@ export class CourseHomePage extends React.Component {
                 assignment={assignment}
                 onEditHabitPressed={() => this.setHabitBeingEdited(assignment)}
                 onAssignmentSaved={this.handleAssignmentSave}
-                onAssignmentDeleted={this.handleAssignmentDelete}
+                onAssignmentDeleted={() => this.handleAssignmentDelete(assignment)}
             />
         ));
 
@@ -83,7 +102,9 @@ export class CourseHomePage extends React.Component {
                 </thead>
                 <tbody>
                     {assignmentRows}
-                    <tr><td colSpan={4}><i className="fa fa-plus"/></td></tr>
+                    <tr onClick={() => this.handleAssignmentAdd(category.name)}>
+                        <td colSpan={4}><i className="fa fa-plus"/></td>
+                    </tr>
                 </tbody>
             </table>
         </CollapseWithHeading>
