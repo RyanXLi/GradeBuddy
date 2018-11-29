@@ -160,6 +160,7 @@ export class Navigation extends React.Component {
             // key={Math.random()} ensures that CourseHomePage's state is reset whenever the selected course changes.
             contentPane = <CourseHomePage
                 key={Math.random()}
+                courses={this.props.courses}
                 selectedCourse={selectedCourse}
                 onCourseEdited={this.handleCourseEdit}
             />;

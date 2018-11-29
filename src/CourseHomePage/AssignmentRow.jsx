@@ -38,7 +38,7 @@ export class AssignmentRow extends Component {
     }
 
     render() {
-        const {name, pointsEarned, pointsPossible} = this.props.assignment;
+        const {name, pointsEarned, pointsPossible, habits} = this.props.assignment;
         return (
             <tr className='assignmentRow'>
                 <td>
@@ -69,7 +69,7 @@ export class AssignmentRow extends Component {
                 </td>
                 <td>
                     <span className='btn-link' onClick={this.props.onEditHabitPressed}>
-                        Add habits
+                        {_.isEmpty(habits) ? 'Add habits' : 'Edit habits'}
                     </span>
                 </td>
                 <td><i className="fa fa-trash" onClick={this.props.onAssignmentDeleted}/></td>

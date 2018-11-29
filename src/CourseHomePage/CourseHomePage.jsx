@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v4';
+import Switch from 'react-switch';
+
+import { AssignmentRow } from './AssignmentRow';
 import { CollapseWithHeading } from '../CollapseWithHeader';
 import { HabitPage } from '../HabitPage/HabitPage';
-import { AssignmentRow } from './AssignmentRow';
+import { AnalyticsPage } from '../AnalyticsPage/AnalyticsPage';
 import './CourseHomePage.css';
 
 /**
@@ -15,6 +18,7 @@ import './CourseHomePage.css';
  */
 export class CourseHomePage extends React.Component {
     static propTypes = {
+        courses: PropTypes.arrayOf(PropTypes.object).isRequired,
         selectedCourse: PropTypes.object.isRequired,
         onCourseEdited: PropTypes.func
     };
@@ -27,13 +31,14 @@ export class CourseHomePage extends React.Component {
         super(props);
         this.state = {
             habitBeingEdited: '', // ID of the assignment whose habits are being edited
-            enabled: false
+            isShowingAnalytics: false
         };
         this.handleAssignmentAdd = this.handleAssignmentAdd.bind(this);
         this.handleAssignmentSave = this.handleAssignmentSave.bind(this);
         this.handleAssignmentDelete = this.handleAssignmentDelete.bind(this);
         this.setHabitBeingEdited = this.setHabitBeingEdited.bind(this);
         this.handleHabitSave = this.handleHabitSave.bind(this);
+        this.toggleActive = this.toggleActive.bind(this);
     }
 
     setNewAssignments(newAssignments) {
@@ -59,6 +64,9 @@ export class CourseHomePage extends React.Component {
     handleAssignmentSave(newAssignment) {
         const assignmentsCopy = this.props.selectedCourse.assignments.slice();
         const index = assignmentsCopy.findIndex(assignment => assignment.id === newAssignment.id);
+        if (index < 0) {
+            return;
+        }
         assignmentsCopy[index] = newAssignment;
         this.setNewAssignments(assignmentsCopy);
     }
@@ -78,10 +86,21 @@ export class CourseHomePage extends React.Component {
     }
 
     handleHabitSave(habits) {
-        const copy = _.clone(this.props.selectedCourse);
-        copy.habits = habits;
-        this.props.onCourseEdited(copy);
-        this.setState({habitBeingEdited: ''});
+        const assignmentsCopy = this.props.selectedCourse.assignments.slice();
+        const index = assignmentsCopy.findIndex(assignment => assignment.id === this.state.habitBeingEdited);
+        if (index < 0) {
+            return;
+        }
+        const assignment = _.clone(assignmentsCopy[index]);
+        assignment.habits = habits;
+        assignmentsCopy[index] = assignment;
+        this.setNewAssignments(assignmentsCopy);
+    }
+
+    toggleActive() {
+        const courseCopy = _.clone(this.props.selectedCourse);
+        courseCopy.isActive = !courseCopy.isActive;
+        this.props.onCourseEdited(courseCopy);
     }
 
     renderCategoryTable(category, assignments=[]) {
@@ -118,7 +137,7 @@ export class CourseHomePage extends React.Component {
 
     render() {
         const course = this.props.selectedCourse;
-        const habitBeingEdited = this.state.habitBeingEdited
+        const {habitBeingEdited, isShowingAnalytics} = this.state;
         if (habitBeingEdited) {
             const assignment = course.assignments.find(assignment => assignment.id === habitBeingEdited);
             return <HabitPage
@@ -132,24 +151,40 @@ export class CourseHomePage extends React.Component {
         const assignmentsForCategory = _.groupBy(course.assignments,
             assignment => categoryNames.has(assignment.category) && assignment.category);
 
+        let bottomContent;
+        if (isShowingAnalytics) {
+            bottomContent = <AnalyticsPage selectedCourse={course} courses={this.props.courses} />
+        } else {
+            bottomContent = <div>
+                {course.categories.map(
+                    category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
+                )}
+                <label style={{display: 'flex'}}>
+                    <span style={{marginRight: '1ch'}}>Toggle course active status</span>
+                    <Switch onChange={this.toggleActive} checked={course.isActive} />
+                </label>
+            </div>
+        }
+
         return <div className='CourseHomePage'>
             <div className='topBar'>
                 {this.props.selectedCourse.shortName}
                 <div className="btn-group btn-group-toggle my-group" data-toggle="buttons">
-                    <label className="btn btn-outline-primary active">
+                    <label
+                        className="btn btn-outline-primary active"
+                        onClick={() => this.setState({isShowingAnalytics: false})}
+                    >
                         <input type="radio" name="options" id="option1" autoComplete="off" checked/> Class Home
                     </label>
-                    <label className="btn btn-outline-primary">
-                        <input type="radio" name="options" id="option2" autoComplete="off"/> Analytics
+                    <label
+                        className="btn btn-outline-primary"
+                        onClick={() => this.setState({isShowingAnalytics: true})}
+                    >
+                        <input type="radio" name="options" id="option2" autoComplete="off"/>Analytics
                     </label>
                 </div>
-
             </div>
-            <div className='courseName'>{this.props.selectedCourse.shortName}</div>
-            {course.categories.map(
-                category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
-            )}
-            
+            {bottomContent}
         </div>;
     }
 }
