@@ -109,7 +109,12 @@ export class NewCoursePage extends Component {
             return;
         }
 
-        this.props.onCourseSaved(this.state);
+        const copy = this.state.categories.slice();
+        const newcat = copy.filter(item => item['weight'] > 0);
+        const stateCopy = {...this.state};
+        stateCopy.categories = newcat;
+        console.log(stateCopy);
+        this.props.onCourseSaved(stateCopy);
     }
 
 
