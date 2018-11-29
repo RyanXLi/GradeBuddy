@@ -23,8 +23,12 @@ export class CourseHomePage extends React.Component {
 
         //EDIT HABIT should be clickable and lead to HabitPage, passing correct params
         return <div className='CourseHomePage' style={{flexDirection: 'column', alignItems: 'flex-start'}}>
-            <div style={{marginBottom:50, fontWeight: 'bold', color: 'black', fontStyle: 'normal', fontSize: 30}}>
+            <div style={{marginBottom:10, marginTop:10, fontWeight: 'bold', color: 'black', fontStyle: 'normal', fontSize: 30}}>
                 {this.props.selectedCourse.shortName}
+            </div>
+            <div style={{marginLeft: 300}}>
+                <button>Class home</button>
+                <button>Analytics</button>
             </div>
             <CollapseWithHeading headingText='Homework'>
                 <table class="table table-hover">
