@@ -4,6 +4,7 @@ import _ from 'lodash';
 import uuid from 'uuid/v4';
 import { CollapseWithHeading } from '../CollapseWithHeader';
 import { HabitPage } from '../HabitPage/HabitPage';
+import { AssignmentRow } from './AssignmentRow';
 import './CourseHomePage.css';
 
 /**
@@ -17,20 +18,31 @@ export class CourseHomePage extends React.Component {
         onCourseEdited: PropTypes.func
     };
 
+    static defaultProps = {
+        onCourseEdited: _.noop
+    };
+
     constructor(props) {
         super(props);
         this.state = {
             habitBeingEdited: '' // ID of the assignment whose habits are being edited
         };
         this.handleAssignmentAdd = this.handleAssignmentAdd.bind(this);
+        this.handleAssignmentSave = this.handleAssignmentSave.bind(this);
+        this.handleAssignmentDelete = this.handleAssignmentDelete.bind(this);
         this.setHabitBeingEdited = this.setHabitBeingEdited.bind(this);
         this.handleHabitSave = this.handleHabitSave.bind(this);
     }
 
+    setNewAssignments(newAssignments) {
+        const courseCopy = _.clone(this.props.selectedCourse);
+        courseCopy.assignments = newAssignments;
+        this.props.onCourseEdited(courseCopy);
+    }
+
     handleAssignmentAdd(category) {
-        const copy = _.clone(this.props.selectedCourse);
-        copy.assignments = this.props.selectedCourse.assignments.slice();
-        copy.assignments.push({
+        const newAssignments = this.props.selectedCourse.assignments.slice();
+        newAssignments.push({
             id: uuid(),
             name: 'New assignment',
             weight: 0, // If 0, use default weight
@@ -39,6 +51,24 @@ export class CourseHomePage extends React.Component {
             category: category,
             habits: {}
         });
+        this.setNewAssignments(newAssignments);
+    }
+
+    handleAssignmentSave(newAssignment) {
+        const assignmentsCopy = this.props.selectedCourse.assignments.slice();
+        const index = assignmentsCopy.findIndex(assignment => assignment.id === newAssignment.id);
+        assignmentsCopy[index] = newAssignment;
+        this.setNewAssignments(assignmentsCopy);
+    }
+
+    handleAssignmentDelete(assignmentToDelete) {
+        const assignmentsCopy = this.props.selectedCourse.assignments.slice();
+        const index = assignmentsCopy.findIndex(assignment => assignment.id === assignmentToDelete.id);
+        if (index < 0) {
+            return;
+        }
+        assignmentsCopy.splice(index, 1);
+        this.setNewAssignments(assignmentsCopy);
     }
 
     setHabitBeingEdited(assignment) {
@@ -54,16 +84,13 @@ export class CourseHomePage extends React.Component {
 
     renderCategoryTable(category, assignments=[]) {
         const assignmentRows = assignments.map(assignment => (
-            <tr key={assignment.id}>
-                <td>{assignment.name}</td>
-                <td>{assignment.pointsEarned}/{assignment.pointsPossible}</td>
-                <td>
-                    <span className='btn-link' onClick={() => this.setHabitBeingEdited(assignment)}>
-                        Add habits
-                    </span>
-                </td>
-                <td><i className="fa fa-trash"/></td>
-            </tr>
+            <AssignmentRow
+                key={assignment.id}
+                assignment={assignment}
+                onEditHabitPressed={() => this.setHabitBeingEdited(assignment)}
+                onAssignmentSaved={this.handleAssignmentSave}
+                onAssignmentDeleted={() => this.handleAssignmentDelete(assignment)}
+            />
         ));
 
         return <CollapseWithHeading key={category.name} headingText={category.name}>
@@ -75,7 +102,9 @@ export class CourseHomePage extends React.Component {
                 </thead>
                 <tbody>
                     {assignmentRows}
-                    <tr><td colSpan={4}><i className="fa fa-plus"/></td></tr>
+                    <tr onClick={() => this.handleAssignmentAdd(category.name)}>
+                        <td colSpan={4}><i className="fa fa-plus"/></td>
+                    </tr>
                 </tbody>
             </table>
         </CollapseWithHeading>
@@ -98,8 +127,10 @@ export class CourseHomePage extends React.Component {
             assignment => categoryNames.has(assignment.category) && assignment.category);
 
         return <div className='CourseHomePage'>
-            <div style={{marginBottom:50}}>
-                {this.props.selectedCourse.shortName}
+            <div className='CourseHomePage-title'>
+                {this.props.selectedCourse.longName}
+                <button>Class home</button>
+                <button>Analytics</button>
             </div>
             {course.categories.map(
                 category => this.renderCategoryTable(category, assignmentsForCategory[category.name])

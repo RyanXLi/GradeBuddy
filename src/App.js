@@ -60,24 +60,20 @@ class App extends Component {
         this.state = {
             courses: [COURSE, COURSE2, COURSE3]
         };
-        this.handleCourseAdd = this.handleCourseAdd.bind(this);
+        this.handleCoursesChanged = this.handleCoursesChanged.bind(this);
     }
 
     /**
-     * Sets state to add a course.
+     * Sets state to change course data
      * 
-     * @param {Course} course - course object to add
+     * @param {Course[]} courses - course array that will replace state
      */
-    handleCourseAdd(course) {
-        this.setState(prevState => {
-            const nextCourses = prevState.courses.slice();
-            nextCourses.push(course);
-            return {courses: nextCourses};
-        });
+    handleCoursesChanged(newCourses) {
+        this.setState({courses: newCourses});
     }
 
     render() {
-        return <Navigation courses={this.state.courses} onCourseAdded={this.handleCourseAdd} />;
+        return <Navigation courses={this.state.courses} onCoursesChanged={this.handleCoursesChanged} />;
     }
 }
 

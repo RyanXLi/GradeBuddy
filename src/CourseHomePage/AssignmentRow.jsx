@@ -3,68 +3,72 @@
  */
 
 import React, { Component } from 'react';
-import InlineEdit from 'react-edit-inline';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import InlineEdit from 'react-edit-inline2';
 import './AssignmentRow.css'
 
 export class AssignmentRow extends Component {
+    static propTypes = {
+        assignment: PropTypes.object.isRequired,
+        onEditHabitPressed: PropTypes.func,
+        onAssignmentSaved: PropTypes.func,
+        onAssignmentDeleted: PropTypes.func,
+    };
+
+    static defaultProps = {
+        onEditHabitPressed: _.noop,
+        onAssignmentSaved: _.noop,
+        onAssignmentDeleted: _.noop,
+    };
+
     constructor(props) {
         super(props);
-        this.state = {
-            ...props
-        };
-        this.nameChanged = this.nameChanged.bind(this);
-        this.pointsEarnedChanged = this.pointsEarnedChanged.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    nameChanged(data) {
-        this.setState({
-            name: data
-        });
-        console.log(this.state.name);
-    }
-
-    pointsEarnedChanged(data) {
-        this.setState({
-            pointsEarned: Number(data)
-        });
-        console.log(this.state.pointsEarned);
+    handleChange(data, propName, isNumber=false) {
+        const copy = _.clone(this.props.assignment);
+        copy[propName] = isNumber ? Number(data[propName]) : data[propName];
+        this.props.onAssignmentSaved(copy);
     }
 
     validateText(text) {
         return (text.length > 0 && text.length < 256);
     }
 
-    validateNumber(number) {
-        return (isNaN(number));
-    }
-
     render() {
-
-        const assignment = this.props.assignment;
-        return(
-            <tr key={assignment.id}>
-
+        const {name, pointsEarned, pointsPossible} = this.props.assignment;
+        return (
+            <tr>
                 <td>
                     <InlineEdit
-                    text={this.state.name}
-                    paramName="name"
-                    change={this.nameChanged}
-                    validate={this.validateText}
-                    activeClassName="nameEditing"
+                        text={name}
+                        paramName="name"
+                        change={data => this.handleChange(data, 'name')}
+                        validate={this.validateText}
+                        activeClassName="nameEditing"
                     />
                 </td>
                 <td>
                     <InlineEdit
-                        text={this.state.pointsEarned}
+                        text={String(pointsEarned)}
                         paramName="pointsEarned"
-                        change={this.pointsEarnedChanged}
-                        validate={this.validateNumber}
+                        change={data => this.handleChange(data, 'pointsEarned', true)}
+                        validate={isFinite}
                         activeClassName="pointsEarnedEditing"
                     />
-                    /{this.state.pointsPossible}
+                    /
+                    <InlineEdit
+                        text={String(pointsPossible)}
+                        paramName="pointsPossible"
+                        change={data => this.handleChange(data, 'pointsPossible', true)}
+                        validate={isFinite}
+                        activeClassName="pointsEarnedEditing"
+                    />
                 </td>
                 <td>
-                    <span className='btn-link' onClick={() => this.props.setHabitBeingEdited(assignment)}>
+                    <span className='btn-link' onClick={this.props.onEditHabitPressed}>
                         Add habits
                     </span>
                 </td>
@@ -73,6 +77,3 @@ export class AssignmentRow extends Component {
         );
     }
 }
-
-
-

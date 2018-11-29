@@ -17,16 +17,16 @@ export class Navigation extends React.Component {
     static propTypes = {
         courses: PropTypes.arrayOf(PropTypes.object), // Array of Course objects to manage
         /**
-         * Callback when a course is added, signature (newCourse: Course): void
+         * Callback when a course is added, or courses are changed.  Signature (newCourses: Course[]): void
          * 
-         * @param {Course} newCourse - new course data
+         * @param {Course[]} newCourses - new courses
          */
-        onCourseAdded: PropTypes.func
+        onCoursesChanged: PropTypes.func
     };
 
     static defaultProps = {
         courses: [],
-        onCourseAdded: _.noop
+        onCoursesChanged: _.noop
     };
 
     constructor(props) {
@@ -39,6 +39,7 @@ export class Navigation extends React.Component {
 
         this.showAddCoursesPane = this.showAddCoursesPane.bind(this);
         this.handleCourseAdd = this.handleCourseAdd.bind(this);
+        this.handleCourseEdit = this.handleCourseEdit.bind(this);
         this.toggleSidebar = this.toggleSidebar.bind(this);
     }
 
@@ -71,7 +72,16 @@ export class Navigation extends React.Component {
      */
     handleCourseAdd(course) {
         this.setSelectedCourse(course);
-        this.props.onCourseAdded(course);
+        const coursesCopy = this.props.courses.slice();
+        coursesCopy.push(course);
+        this.props.onCoursesChanged(coursesCopy);
+    }
+
+    handleCourseEdit(course) {
+        const index = this.props.courses.findIndex(course => course.id === this.state.selectedCourse);
+        const coursesCopy = this.props.courses.slice();
+        coursesCopy[index] = course;
+        this.props.onCoursesChanged(coursesCopy);
     }
 
     /**
@@ -147,7 +157,11 @@ export class Navigation extends React.Component {
         let contentPane;
         if (selectedCourse) {
             // key={Math.random()} ensures that CourseHomePage's state is reset whenever the selected course changes.
-            contentPane = <CourseHomePage key={Math.random()} selectedCourse={selectedCourse} />;
+            contentPane = <CourseHomePage
+                key={Math.random()}
+                selectedCourse={selectedCourse}
+                onCourseEdited={this.handleCourseEdit}
+            />;
         } else if (this.state.isAddingCourse) {
             contentPane = <NewCoursePage onCourseSaved={this.handleCourseAdd} />;
         } else {
