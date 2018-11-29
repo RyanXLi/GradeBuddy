@@ -42,7 +42,7 @@ export class AssignmentRow extends Component {
 
         const assignment = this.props.assignment;
         return(
-            <tr key={assignment.id}>
+            <tr className='assignmentRow' key={assignment.id}>
 
                 <td>
                     <InlineEdit
