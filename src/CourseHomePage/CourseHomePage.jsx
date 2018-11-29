@@ -4,7 +4,9 @@ import _ from 'lodash';
 import uuid from 'uuid/v4';
 import { CollapseWithHeading } from '../CollapseWithHeader';
 import { HabitPage } from '../HabitPage/HabitPage';
+import { AssignmentRow } from './AssignmentRow';
 import './CourseHomePage.css';
+
 
 /**
  * Content pane displaying the assignment details of course selected.
@@ -23,6 +25,7 @@ export class CourseHomePage extends React.Component {
             habitBeingEdited: '' // ID of the assignment whose habits are being edited
         };
         this.handleAssignmentAdd = this.handleAssignmentAdd.bind(this);
+        this.handleAssignmentSave = this.handleAssignmentSave.bind(this);
         this.setHabitBeingEdited = this.setHabitBeingEdited.bind(this);
         this.handleHabitSave = this.handleHabitSave.bind(this);
     }
@@ -41,6 +44,14 @@ export class CourseHomePage extends React.Component {
         });
     }
 
+    handleAssignmentSave(newAssignment) {
+
+    }
+
+    handleAssignmentDelete(assignment) {
+
+    }
+
     setHabitBeingEdited(assignment) {
         this.setState({habitBeingEdited: assignment.id});
     }
@@ -54,16 +65,13 @@ export class CourseHomePage extends React.Component {
 
     renderCategoryTable(category, assignments=[]) {
         const assignmentRows = assignments.map(assignment => (
-            <tr key={assignment.id}>
-                <td>{assignment.name}</td>
-                <td>{assignment.pointsEarned}/{assignment.pointsPossible}</td>
-                <td>
-                    <span className='btn-link' onClick={() => this.setHabitBeingEdited(assignment)}>
-                        Add habits
-                    </span>
-                </td>
-                <td><i className="fa fa-trash"/></td>
-            </tr>
+            <AssignmentRow
+                key={assignment.id}
+                assignment={assignment}
+                onEditHabitPressed={() => this.setHabitBeingEdited(assignment)}
+                onAssignmentSaved={this.handleAssignmentSave}
+                onAssignmentDeleted={this.handleAssignmentDelete}
+            />
         ));
 
         return <CollapseWithHeading key={category.name} headingText={category.name}>
