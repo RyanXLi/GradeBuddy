@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v4';
+import Switch from 'react-switch';
 
 import { AssignmentRow } from './AssignmentRow';
 import { CollapseWithHeading } from '../CollapseWithHeader';
@@ -37,6 +38,7 @@ export class CourseHomePage extends React.Component {
         this.handleAssignmentDelete = this.handleAssignmentDelete.bind(this);
         this.setHabitBeingEdited = this.setHabitBeingEdited.bind(this);
         this.handleHabitSave = this.handleHabitSave.bind(this);
+        this.toggleActive = this.toggleActive.bind(this);
     }
 
     setNewAssignments(newAssignments) {
@@ -103,6 +105,12 @@ export class CourseHomePage extends React.Component {
         this.setState({isShowingAnalytics: false});
     }
 
+    toggleActive() {
+        const courseCopy = _.clone(this.props.selectedCourse);
+        courseCopy.isActive = !courseCopy.isActive;
+        this.props.onCourseEdited(courseCopy);
+    }
+
     renderCategoryTable(category, assignments=[]) {
         const assignmentRows = assignments.map(assignment => (
             <AssignmentRow
@@ -151,9 +159,15 @@ export class CourseHomePage extends React.Component {
         if (isShowingAnalytics) {
             bottomContent = <AnalyticsPage selectedCourse={course} courses={this.props.courses} />
         } else {
-            bottomContent = course.categories.map(
-                category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
-            )
+            bottomContent = <div>
+                {course.categories.map(
+                    category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
+                )}
+                <label>
+                    <span>Toggle course active status</span>
+                    <Switch onChange={this.toggleActive} checked={course.isActive} />
+                </label>
+            </div>
         }
 
         return <div className='CourseHomePage'>
