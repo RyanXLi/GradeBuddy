@@ -27,11 +27,14 @@
 .topBar{
     font-size: 2em;
     position: relative;
-    border-bottom-style: solid;
-    border-width: thin;
-    border-color: black;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /*border-bottom-style: solid;*/
+    /*border-width: thin;*/
+    /*border-color: black;*/
+    /*padding-bottom: 10px;*/
+    margin-bottom: 10px;
 }
 
 .analyticsButton{
@@ -55,4 +58,9 @@
     color: white;
     position:absolute;
     right:140px;
+}
+
+.my-group {
+    float: right;
+    margin: 10px 30px 10px 10px;
 }

@@ -5,6 +5,7 @@ import { CollapseWithHeading } from './CollapseWithHeader';
 import { NothingSelectedPane } from './NothingSelectedPane';
 import { NewCoursePage } from './NewCoursePage/NewCoursePage';
 import { CourseHomePage } from './CourseHomePage/CourseHomePage';
+import bulbImage from './single_bulb_logo.png';
 
 import './Navigation.css';
 
@@ -170,7 +171,9 @@ export class Navigation extends React.Component {
 
         return <div className='Navigation'>
             <nav className='navbar navbar-expand-lg navbar-light Navigation-navbar'>
-                <div className='navbar-brand'>Grade buddy</div>
+                <div className='navbar-brand' style={{display: 'flex'}}>
+                    <img src={bulbImage} className="my-img" alt="logo"/><span className="app-title">Grade Buddy</span>
+                </div>
             </nav>
             <div className='Navigation-main-container'>
                 {this.renderSidebar()}

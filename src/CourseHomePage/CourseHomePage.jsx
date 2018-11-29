@@ -130,8 +130,15 @@ export class CourseHomePage extends React.Component {
         return <div className='CourseHomePage'>
             <div className='topBar'>
                 {this.props.selectedCourse.shortName}
-                <button className='classHomeButton'>Class Home</button>
-                <button className='analyticsButton'>Analytics</button>
+                <div className="btn-group btn-group-toggle my-group" data-toggle="buttons">
+                    <label className="btn btn-outline-primary active">
+                        <input type="radio" name="options" id="option1" autoComplete="off" checked/> Class Home
+                    </label>
+                    <label className="btn btn-outline-primary">
+                        <input type="radio" name="options" id="option2" autoComplete="off"/> Analytics
+                    </label>
+                </div>
+
             </div>
             {course.categories.map(
                 category => this.renderCategoryTable(category, assignmentsForCategory[category.name])

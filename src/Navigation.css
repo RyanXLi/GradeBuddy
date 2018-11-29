@@ -84,3 +84,16 @@
     overflow-y: scroll;
     padding: 10px;
 }
+
+.my-img {
+    height: 50px;
+    width: 50px;
+}
+
+.app-title {
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-left: 10px;
+    font-size: 30px;
+}
