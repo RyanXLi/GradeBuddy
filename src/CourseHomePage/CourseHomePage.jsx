@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v4';
+
+import { AssignmentRow } from './AssignmentRow';
 import { CollapseWithHeading } from '../CollapseWithHeader';
 import { HabitPage } from '../HabitPage/HabitPage';
-import { AssignmentRow } from './AssignmentRow';
+import { AnalyticsPage } from '../AnalyticsPage/AnalyticsPage';
 import './CourseHomePage.css';
 
 /**
@@ -15,6 +17,7 @@ import './CourseHomePage.css';
  */
 export class CourseHomePage extends React.Component {
     static propTypes = {
+        courses: PropTypes.arrayOf(PropTypes.object).isRequired,
         selectedCourse: PropTypes.object.isRequired,
         onCourseEdited: PropTypes.func
     };
@@ -26,7 +29,8 @@ export class CourseHomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            habitBeingEdited: '' // ID of the assignment whose habits are being edited
+            habitBeingEdited: '', // ID of the assignment whose habits are being edited
+            isShowingAnalytics: false
         };
         this.handleAssignmentAdd = this.handleAssignmentAdd.bind(this);
         this.handleAssignmentSave = this.handleAssignmentSave.bind(this);
@@ -58,6 +62,9 @@ export class CourseHomePage extends React.Component {
     handleAssignmentSave(newAssignment) {
         const assignmentsCopy = this.props.selectedCourse.assignments.slice();
         const index = assignmentsCopy.findIndex(assignment => assignment.id === newAssignment.id);
+        if (index < 0) {
+            return;
+        }
         assignmentsCopy[index] = newAssignment;
         this.setNewAssignments(assignmentsCopy);
     }
@@ -77,10 +84,23 @@ export class CourseHomePage extends React.Component {
     }
 
     handleHabitSave(habits) {
-        const copy = _.clone(this.props.selectedCourse);
-        copy.habits = habits;
-        this.props.onCourseEdited(copy);
-        this.setState({habitBeingEdited: ''});
+        const assignmentsCopy = this.props.selectedCourse.assignments.slice();
+        const index = assignmentsCopy.findIndex(assignment => assignment.id === this.state.habitBeingEdited);
+        if (index < 0) {
+            return;
+        }
+        const assignment = _.clone(assignmentsCopy[index]);
+        assignment.habits = habits;
+        assignmentsCopy[index] = assignment;
+        this.setNewAssignments(assignmentsCopy);
+    }
+
+    showAnalytics() {
+        this.setState({isShowingAnalytics: true});
+    }
+
+    hideAnalytics() {
+        this.setState({isShowingAnalytics: false});
     }
 
     renderCategoryTable(category, assignments=[]) {
@@ -113,7 +133,7 @@ export class CourseHomePage extends React.Component {
 
     render() {
         const course = this.props.selectedCourse;
-        const habitBeingEdited = this.state.habitBeingEdited
+        const {habitBeingEdited, isShowingAnalytics} = this.state;
         if (habitBeingEdited) {
             const assignment = course.assignments.find(assignment => assignment.id === habitBeingEdited);
             return <HabitPage
@@ -127,16 +147,32 @@ export class CourseHomePage extends React.Component {
         const assignmentsForCategory = _.groupBy(course.assignments,
             assignment => categoryNames.has(assignment.category) && assignment.category);
 
+        let bottomContent;
+        if (isShowingAnalytics) {
+            bottomContent = <AnalyticsPage selectedCourse={course} courses={this.props.courses} />
+        } else {
+            bottomContent = course.categories.map(
+                category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
+            )
+        }
+
         return <div className='CourseHomePage'>
             <div className='topBar'>
                 {this.props.selectedCourse.shortName}
-                <button className='classHomeButton'>Class Home</button>
-                <button className='analyticsButton'>Analytics</button>
+                <button
+                    className='classHomeButton'
+                    onClick={() => this.setState({isShowingAnalytics: false})}
+                >
+                    Class Home
+                </button>
+                <button
+                    className='analyticsButton'
+                    onClick={() => this.setState({isShowingAnalytics: true})}
+                >
+                    Analytics
+                </button>
             </div>
-            {course.categories.map(
-                category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
-            )}
-            {this.renderCategoryTable({name: 'Uncategorized'}, assignmentsForCategory[false])}
+            {bottomContent}
         </div>;
     }
 }
