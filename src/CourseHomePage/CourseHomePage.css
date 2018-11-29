@@ -1,14 +1,8 @@
 .CourseHomePage {
     color: black;
-}
-
-.CourseHomePage-title {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    font-weight: bold;
-    color: black;
-    font-style: normal;
-    font-size: 30;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .CourseHomePage-inner {
@@ -22,6 +16,15 @@
 
 .fa-trash{
     
+}
+
+.courseName{
+    font-size:2em;
+    margin-bottom:5px;
+}
+
+.categoryHeading{
+    font-size:2em;
 }
 
 .topBar{
@@ -39,7 +42,6 @@
 
 .analyticsButton{
     font-size:0.9em;
-    font-family: Arial, Helvetica, sans-serif;
     border:1px;
     border-radius:5px;
     background-color:orange;
@@ -51,7 +53,6 @@
 
 .classHomeButton{
     font-size: 0.9em;
-    font-family: Arial, Helvetica, sans-serif;
     border:1px;
     border-radius:5px;
     background-color:blue;
@@ -63,4 +64,8 @@
 .my-group {
     float: right;
     margin: 10px 30px 10px 10px;
+}
+
+.tableRow{
+    text-align: center;
 }

@@ -26,7 +26,8 @@ export class CourseHomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            habitBeingEdited: '' // ID of the assignment whose habits are being edited
+            habitBeingEdited: '', // ID of the assignment whose habits are being edited
+            enabled: false
         };
         this.handleAssignmentAdd = this.handleAssignmentAdd.bind(this);
         this.handleAssignmentSave = this.handleAssignmentSave.bind(this);
@@ -94,10 +95,10 @@ export class CourseHomePage extends React.Component {
             />
         ));
 
-        return <CollapseWithHeading key={category.name} headingText={category.name}>
+        return <CollapseWithHeading className='categoryHeading' key={category.name} headingText={category.name}>
             <table className="table table-hover">
                 <thead>
-                    <tr>
+                    <tr className='tableRow'>
                         <th>Assignment</th><th>Grade</th><th>Habits</th><th>Delete</th>
                     </tr>
                 </thead>
@@ -109,6 +110,10 @@ export class CourseHomePage extends React.Component {
                 </tbody>
             </table>
         </CollapseWithHeading>
+    }
+
+    handleChange(checked) {
+        this.setState({ habitBeingEdited:this.state.habitBeingEdited, enabled:checked });
     }
 
     render() {
@@ -140,10 +145,11 @@ export class CourseHomePage extends React.Component {
                 </div>
 
             </div>
+            <div className='courseName'>{this.props.selectedCourse.shortName}</div>
             {course.categories.map(
                 category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
             )}
-            {this.renderCategoryTable({name: 'Uncategorized'}, assignmentsForCategory[false])}
+            
         </div>;
     }
 }
