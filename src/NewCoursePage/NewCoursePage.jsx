@@ -39,7 +39,7 @@ export class NewCoursePage extends Component {
 
     updateCourseTitle(evt) {
         this.setState({
-            courseTitle: evt.target.value
+            longName: evt.target.value
         });
         // console.log(this.state.courseTitle);
     }
@@ -149,7 +149,7 @@ export class NewCoursePage extends Component {
 
                         <form className="section class-info-div">
                             <div >
-                                <label htmlFor="shortName">Course Name *</label>
+                                <label htmlFor="shortName">Course Name (shows up on sidebar)*</label>
                                 <input className="form-control" id="shortName"
                                        value={this.state.shortName}
                                        onChange={evt => this.updateShortName(evt)}
@@ -158,7 +158,7 @@ export class NewCoursePage extends Component {
                             <div className="course-title-section">
                                 <label htmlFor="courseTitle">Course Title</label>
                                 <input className="form-control" id="courseTitle"
-                                       value={this.state.courseTitle}
+                                       value={this.state.longName}
                                        onChange={evt => this.updateCourseTitle(evt)}
                                        placeholder="System Programming"/>
                             </div>

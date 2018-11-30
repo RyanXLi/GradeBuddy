@@ -168,7 +168,7 @@ export class CourseHomePage extends React.Component {
 
         return <div className='CourseHomePage'>
             <div className='topBar'>
-                {this.props.selectedCourse.shortName}
+                {this.props.selectedCourse.shortName} : {this.props.selectedCourse.longName}
                 <div className="btn-group btn-group-toggle my-group" data-toggle="buttons">
                     <label
                         className="btn btn-outline-primary active"
