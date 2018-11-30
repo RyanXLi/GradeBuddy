@@ -1,31 +1,19 @@
-.assignmentRow{
+.assignmentRow {
     text-align: center;
 }
 
-.assignmentGrade:hover{
+.assignmentGrade:hover {
     background-color:orange;
 }
 
-.assignmentGrade{
-    
-}
-
-.assignmentName:hover{
+.assignmentName:hover {
     background-color:orange;
 }
 
-.assignmentName{
-    
-}
-
-.fa-trash:hover{
+.fa-trash:hover {
     color:red;
 }
 
-.fa-trash{
-    
-}
-
-.btn-link{
-    
+.AssignmentRow-grade-input {
+    max-width: 5ch;
 }

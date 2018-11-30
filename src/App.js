@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import { Navigation } from './Navigation';
 import uuid from 'uuid/v4';
 

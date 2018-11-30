@@ -56,7 +56,7 @@ export class AssignmentRow extends Component {
                         paramName="pointsEarned"
                         change={data => this.handleChange(data, 'pointsEarned', true)}
                         validate={isFinite}
-                        activeClassName="pointsEarnedEditing"
+                        activeClassName="AssignmentRow-grade-input"
                     />
                     /
                     <InlineEdit className='assignmentGrade'
@@ -64,7 +64,7 @@ export class AssignmentRow extends Component {
                         paramName="pointsPossible"
                         change={data => this.handleChange(data, 'pointsPossible', true)}
                         validate={isFinite}
-                        activeClassName="pointsEarnedEditing"
+                        activeClassName="AssignmentRow-grade-input"
                     />
                 </td>
                 <td>
