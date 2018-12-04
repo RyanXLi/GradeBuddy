@@ -114,7 +114,7 @@ export class CourseHomePage extends React.Component {
             />
         ));
 
-        return <CollapseWithHeading className='categoryHeading' key={category.name} headingText={category.name}>
+        return <CollapseWithHeading className='categoryHeading' key={category.name} headingText={category.name} titleBackground={true}>
             <table className="table table-hover">
                 <thead>
                     <tr className='tableRow'>

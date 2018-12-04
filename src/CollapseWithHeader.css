@@ -1,0 +1,9 @@
+.collapse-title {
+    background-color: aliceblue;
+    border-radius: 30px;
+    border: solid;
+    border-color: aliceblue;
+    font-weight: bold;
+    padding: 7px 20px;
+    margin-bottom: 10px;
+}
