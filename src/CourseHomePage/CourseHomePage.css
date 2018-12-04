@@ -65,3 +65,15 @@
 .tableRow{
     text-align: center;
 }
+
+.fa-plus2{
+    text-align: center;
+}
+
+.fa-plus2:hover{
+    color:blue;
+}
+
+.addRow{
+    text-align:center;
+}

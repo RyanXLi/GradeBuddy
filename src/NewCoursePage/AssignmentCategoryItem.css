@@ -3,7 +3,7 @@
 }
 
 .weight-name {
-    width: 35%;
+    width: 50%;
     float: left;
 }
 
@@ -11,6 +11,6 @@
     height: 35px;
 }
 
-.category-checkbox {
+.category-checkbox{
     margin-right: 10px;
 }

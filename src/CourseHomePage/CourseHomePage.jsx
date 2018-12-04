@@ -124,7 +124,7 @@ export class CourseHomePage extends React.Component {
                 <tbody>
                     {assignmentRows}
                     <tr onClick={() => this.handleAssignmentAdd(category.name)}>
-                        <td colSpan={4}><i className="fa fa-plus"/></td>
+                        <td className="addRow" colSpan={4}><i className="fa fa-plus fa-plus2"/></td>
                     </tr>
                 </tbody>
             </table>
