@@ -14,3 +14,19 @@
 .category-checkbox {
     margin-right: 10px;
 }
+
+.error-style {
+    /*color: white;*/
+    background: indianred;
+    /*@include box-shadow(0 0 5px rgba(220, 0, 0, 1)) !important;*/
+    /*border: 1px solid rgba(220, 0, 0, 1) !important;*/
+    /*outline: none !important;*/
+}
+
+.error-style:focus {
+    /*color: white;*/
+    background: indianred;
+    /*@include box-shadow(0 0 5px rgba(220, 0, 0, 1)) !important;*/
+    /*border: 1px solid rgba(220, 0, 0, 1) !important;*/
+    /*outline: none !important;*/
+}

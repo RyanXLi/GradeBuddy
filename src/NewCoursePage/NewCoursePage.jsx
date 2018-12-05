@@ -132,8 +132,9 @@ export class NewCoursePage extends Component {
         }
 
 
-
+        const warn = this.state.shortName === '' ? " error-style" : "";
         return (
+
             <div>
             <div className="NewClassPage">
                 <div className="title">Add new class</div>
@@ -150,7 +151,7 @@ export class NewCoursePage extends Component {
                         <form className="section class-info-div">
                             <div >
                                 <label htmlFor="shortName">Course Name (shows up on sidebar)*</label>
-                                <input className="form-control" id="shortName"
+                                <input className={"form-control" + warn} id="shortName"
                                        value={this.state.shortName}
                                        onChange={evt => this.updateShortName(evt)}
                                        placeholder="CS241" />
