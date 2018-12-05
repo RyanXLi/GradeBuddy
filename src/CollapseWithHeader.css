@@ -1,0 +1,10 @@
+.collapse-title {
+    color: white;
+    background-color: cornflowerblue;
+    border-radius: 30px;
+    border: solid;
+    border-color: cornflowerblue;
+    font-weight: bold;
+    padding: 7px 20px;
+    margin-bottom: 10px;
+}

@@ -45,7 +45,7 @@ export class HabitPage extends Component {
 
     render() {
         return <div>
-            <h1> Edit study habits</h1>
+            <div className="habit-title"> Edit study habits</div>
 
             <div className='form-group'>
                 <label htmlFor='Question_startDate'>Q1: Date started</label>
@@ -65,10 +65,10 @@ export class HabitPage extends Component {
             <div className='form-group'>
                 <label htmlFor='Question_lecture'>Q4: What % of lectures did you attend for this
                     assignment/review? </label>
-                <div style={{display: 'flex', alignItems: 'center'}}>
+                <div className="lecture-slider" style={{display: 'flex', alignItems: 'center'}}>
                     <input type='range' className='form-control' id='Question_lecture' min='0' max='100' value={this.state.lecturePercentage}
                             onChange={event => this.handleChange(event, 'lecturePercentage', true)}/>
-                    <div>{this.state.lecturePercentage}</div>
+                    <div className="lecture-number">{this.state.lecturePercentage}</div>
                 </div>
             </div>
 

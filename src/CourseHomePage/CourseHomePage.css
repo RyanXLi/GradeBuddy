@@ -24,6 +24,7 @@
 }
 
 .topBar{
+    font-weight: bold;
     font-size: 2em;
     position: relative;
     display: flex;
@@ -64,4 +65,28 @@
 
 .tableRow{
     text-align: center;
+    background-color: aliceblue;
+}
+
+.tableRow th {
+    padding: 10px;
+}
+
+.fa-plus2{
+    text-align: center;
+}
+
+.fa-plus2:hover{
+    color:blue;
+}
+
+.addRow{
+    text-align:center;
+}
+.table td {
+    padding: 10px;
+}
+
+.btn-link {
+    color: royalblue;
 }

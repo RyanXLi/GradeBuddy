@@ -1,14 +1,13 @@
 /**
  * Created by RyanX on 2018/11/16.
  */
-
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import InlineEdit from 'react-edit-inline2';
+import { InlineEdit } from './InlineEdit';
 import './AssignmentRow.css'
 
-export class AssignmentRow extends Component {
+export class AssignmentRow extends React.Component {
     static propTypes = {
         assignment: PropTypes.object.isRequired,
         onEditHabitPressed: PropTypes.func,
@@ -28,43 +27,44 @@ export class AssignmentRow extends Component {
     }
 
     handleChange(data, propName, isNumber=false) {
-        const copy = _.clone(this.props.assignment);
-        copy[propName] = isNumber ? Number(data[propName]) : data[propName];
-        this.props.onAssignmentSaved(copy);
-    }
+        if (data.length <= 0) {
+            return;
+        }
 
-    validateText(text) {
-        return (text.length > 0 && text.length < 256);
+        const newValue = isNumber ? Number(data) : data;
+        if (isNumber && !isFinite(newValue)) {
+            return;
+        }
+
+        const copy = _.clone(this.props.assignment);
+        copy[propName] = newValue;
+        this.props.onAssignmentSaved(copy);
     }
 
     render() {
         const {name, pointsEarned, pointsPossible, habits} = this.props.assignment;
         return (
-            <tr className='assignmentRow'>
+            <tr className='AssignmentRow'>
                 <td>
-                    <InlineEdit className='assignmentName'
+                    <InlineEdit
                         text={name}
-                        paramName="name"
-                        change={data => this.handleChange(data, 'name')}
-                        validate={this.validateText}
-                        activeClassName="nameEditing"
+                        staticClassName='AssignmentRow-editable'
+                        onFocusOut={data => this.handleChange(data, 'name')}
                     />
                 </td>
                 <td>
-                    <InlineEdit className='assignmentGrade'
+                    <InlineEdit
                         text={String(pointsEarned)}
-                        paramName="pointsEarned"
-                        change={data => this.handleChange(data, 'pointsEarned', true)}
-                        validate={isFinite}
-                        activeClassName="AssignmentRow-grade-input"
+                        staticClassName='AssignmentRow-editable'
+                        onFocusOut={data => this.handleChange(data, 'pointsEarned', true)}
+                        size={5}
                     />
                     /
-                    <InlineEdit className='assignmentGrade'
+                    <InlineEdit
                         text={String(pointsPossible)}
-                        paramName="pointsPossible"
-                        change={data => this.handleChange(data, 'pointsPossible', true)}
-                        validate={isFinite}
-                        activeClassName="AssignmentRow-grade-input"
+                        staticClassName='AssignmentRow-editable'
+                        onFocusOut={data => this.handleChange(data, 'pointsPossible', true)}
+                        size={5}
                     />
                 </td>
                 <td>
@@ -72,7 +72,7 @@ export class AssignmentRow extends Component {
                         {_.isEmpty(habits) ? 'Add habits' : 'Edit habits'}
                     </span>
                 </td>
-                <td><i className="fa fa-trash" onClick={this.props.onAssignmentDeleted}/></td>
+                <td><i className='fa fa-trash' onClick={this.props.onAssignmentDeleted}/></td>
             </tr>
         );
     }

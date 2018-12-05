@@ -6,8 +6,9 @@
 
 .Navigation-navbar {
     background-color: var(--theme-color);
-    border-bottom: 1px solid var(--theme-grey);
+    /*border-bottom: 1px solid var(--theme-grey);*/
     flex-shrink: 0;
+    padding: 0.3rem 1rem;
 }
 
 .Navigation-main-container {
@@ -95,4 +96,5 @@
     color: white;
     margin-left: 10px;
     font-size: 30px;
+    font-weight: 500;
 }

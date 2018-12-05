@@ -30,6 +30,7 @@ export class CourseHomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            prevCourseId: props.selectedCourse.id,
             habitBeingEdited: '', // ID of the assignment whose habits are being edited
             isShowingAnalytics: false
         };
@@ -39,6 +40,17 @@ export class CourseHomePage extends React.Component {
         this.setHabitBeingEdited = this.setHabitBeingEdited.bind(this);
         this.handleHabitSave = this.handleHabitSave.bind(this);
         this.toggleActive = this.toggleActive.bind(this);
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.selectedCourse.id !== state.prevCourseId) {
+            return {
+                prevCourseId: props.selectedCourse.id,
+                habitBeingEdited: ''
+            };
+        } else {
+            return { prevCourseId: props.selectedCourse.id };
+        }
     }
 
     setNewAssignments(newAssignments) {
@@ -114,7 +126,7 @@ export class CourseHomePage extends React.Component {
             />
         ));
 
-        return <CollapseWithHeading className='categoryHeading' key={category.name} headingText={category.name}>
+        return <CollapseWithHeading className='categoryHeading' key={category.name} headingText={category.name} titleBackground={true}>
             <table className="table table-hover">
                 <thead>
                     <tr className='tableRow'>
@@ -124,7 +136,7 @@ export class CourseHomePage extends React.Component {
                 <tbody>
                     {assignmentRows}
                     <tr onClick={() => this.handleAssignmentAdd(category.name)}>
-                        <td colSpan={4}><i className="fa fa-plus"/></td>
+                        <td className="addRow" colSpan={4}><i className="fa fa-plus fa-plus2"/></td>
                     </tr>
                 </tbody>
             </table>
