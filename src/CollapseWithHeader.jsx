@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Collapse } from 'reactstrap';
+import './CollapseWithHeader.css';
 
 /**
  * A simple heading, that when clicked, toggles visibility of content under it.  Set heading text and styling via props,\
@@ -39,10 +40,11 @@ export class CollapseWithHeading extends React.Component {
     }
 
     render() {
+        const titleBackground = this.props.titleBackground ?  " collapse-title" : "";
         const openIconClassName = this.state.isOpen ? 'fas fa-chevron-down' : 'fas fa-chevron-right';
         const openIcon = <i className={openIconClassName} style={{paddingLeft: '0.25em'}} />
-        return <div>
-            <div className={this.props.headingClassName} onClick={this.toggleOpenState}>
+        return <div >
+            <div className={this.props.headingClassName + titleBackground} onClick={this.toggleOpenState}>
                 {this.props.headingText} {openIcon}
             </div>
             <Collapse isOpen={this.state.isOpen}>{this.props.children}</Collapse>

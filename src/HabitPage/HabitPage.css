@@ -6,7 +6,25 @@
     font-style: italic;
 }
 
+.habit-title {
+    font-size: 2em;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
 .HabitPage-inner {
     text-align: center;
     flex-grow: 1;
+}
+
+.lecture-slider {
+    width: 50%;
+}
+
+.lecture-number {
+    padding: 10px;
+}
+
+.form-control {
+    width: 75%
 }
