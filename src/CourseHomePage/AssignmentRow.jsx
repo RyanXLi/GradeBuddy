@@ -27,13 +27,18 @@ export class AssignmentRow extends React.Component {
     }
 
     handleChange(data, propName, isNumber=false) {
-        const copy = _.clone(this.props.assignment);
-        copy[propName] = isNumber ? Number(data) : data;
-        this.props.onAssignmentSaved(copy);
-    }
+        if (data.length <= 0) {
+            return;
+        }
 
-    validateText(text) {
-        return (text.length > 0 && text.length < 256);
+        const newValue = isNumber ? Number(data) : data;
+        if (isNumber && !isFinite(newValue)) {
+            return;
+        }
+
+        const copy = _.clone(this.props.assignment);
+        copy[propName] = newValue;
+        this.props.onAssignmentSaved(copy);
     }
 
     render() {
