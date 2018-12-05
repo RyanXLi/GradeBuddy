@@ -1,8 +1,8 @@
-.assignmentRow {
+.AssignmentRow {
     text-align: center;
 }
 
-.assignmentGrade:hover {
+.AssignmentRow-editable:hover {
     background-color:cornflowerblue;
     color:white;
     font-weight: bold;
@@ -16,8 +16,4 @@
 
 .fa-trash:hover {
     color:brown;
-}
-
-.AssignmentRow-grade-input {
-    max-width: 5ch;
 }
