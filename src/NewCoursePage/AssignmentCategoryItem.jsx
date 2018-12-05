@@ -8,6 +8,7 @@ export class AssignmentCategoryItem extends Component {
         this.state = {
             checked: false,
             valid: false,
+            firstTime: this.props.firstTime,
         };
         this.handleCheckedChange = this.handleCheckedChange.bind(this);
         this.handleWeightChange = this.handleWeightChange.bind(this);
@@ -31,6 +32,9 @@ export class AssignmentCategoryItem extends Component {
     }
 
     handleWeightChange(evt) {
+        if (this.state.firstTime) {
+            this.setState({firstTime: false,});
+        }
         if (evt.target.value === '' || isNaN(evt.target.value) || evt.target.value > 100) {
             console.log("no");
             this.setState({valid: false});
@@ -48,7 +52,7 @@ export class AssignmentCategoryItem extends Component {
 
 
     render() {
-        const errorStyle = this.state.valid ? "" : " error-style";
+        const errorStyle = !this.state.firstTime && !this.state.valid ? " error-style" : "";
         const weight = this.state.checked
             ? <span className="input-group mb-3 weight-input">
                 <div className="input-group-prepend">
