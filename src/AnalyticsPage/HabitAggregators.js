@@ -1,10 +1,11 @@
 import { dateDiffInDays } from '../util';
 
 class HabitAggregator {
-    constructor(aggregationName, getHabitValue) {
+    constructor(aggregationName, getHabitValue, dataType='number') {
         this.aggregationName = aggregationName;
         this.getHabitValue = getHabitValue;
         this.aggregateHabits = this.aggregateHabits.bind(this);
+        this.dataType = dataType;
     }
 
     aggregateHabits(course) {
@@ -14,7 +15,11 @@ class HabitAggregator {
             const gradePercent = assignment.pointsEarned / assignment.pointsPossible * 100;
             const habitValue = this.getHabitValue(assignment.habits);
             if (isFinite(gradePercent) && isFinite(habitValue)) {
-                dataOrigins.push(`${course.shortName}: ${assignment.name}`);
+                dataOrigins.push({
+                    course,
+                    assignment
+                });
+                //dataOrigins.push(`${course.shortName}: ${assignment.name}`);
                 data.push([habitValue, gradePercent]);
             }
         }
@@ -28,5 +33,11 @@ export const AGGREGATORS = [
     ),
     new HabitAggregator('Hours spent on assignment', habits => habits.hoursSpent),
     new HabitAggregator('% of lectures attended', habits => habits.lecturePercentage),
-    new HabitAggregator('Worked with peers', habits => habits.workedWithPeers ? 1 : 0),
+    new HabitAggregator('Worked with peers', habits => {
+        if (habits.workedWithPeers === undefined) {
+            return Infinity;
+        } else {
+            return habits.workedWithPeers ? 1 : 0;
+        }
+    }, 'boolean'),
 ];
