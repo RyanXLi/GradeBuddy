@@ -60,7 +60,7 @@ export class InlineEdit extends React.Component {
                 autoFocus
             />;
         } else {
-            return <span
+            return <span title="Click to edit."
                 tabIndex={0}
                 className={staticClassName}
                 onClick={this.setEditing}
