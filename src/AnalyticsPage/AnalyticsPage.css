@@ -28,3 +28,9 @@
 .AnalyticsPage-habit-selector label {
     margin-right: 1ch;
 }
+
+.advancedLine{
+    word-wrap:break-word;
+    width: 400px;
+    padding-top:10px;
+}

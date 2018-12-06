@@ -79,9 +79,9 @@ export class AnalyticsPage extends React.Component {
         }
         const {string, equation, points, r2} = regressionResult;
         return <CollapseWithHeading headingText='Advanced statistics' initialIsOpen={false}>
-            <div>Data points: {points.length}</div>
-            <div>Correlation strength (r<sup>2</sup>): {isFinite(r2) ? r2 : 'undefined'}</div>
-            <div>Equation: {equation.every(isFinite) ? string : 'undefined'}</div>
+            <div className="advancedLine">Assignments in data pool: <b>{points.length}</b></div>
+            <div className="advancedLine">Correlation between grades and {this.state.selectedAggregator} (0 - no correlation, 1 - perfect correlation): <b>{isFinite(r2) ? r2 : 'undefined'}</b></div>
+            <div className="advancedLine">Line Equation: <b>{equation.every(isFinite) ? string : 'undefined'}</b></div>
         </CollapseWithHeading>;
     }
 
