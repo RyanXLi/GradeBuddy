@@ -150,7 +150,11 @@ export class CourseHomePage extends React.Component {
 
     render() {
         if (this.state.isCourseBeingEdited) { // TODO Ryan: move this if statement somewhere better
-            return <NewCoursePage initalState={this.props.selectedCourse} onCourseSaved={this.props.onCourseEdited}/>
+            return <NewCoursePage initalState={this.props.selectedCourse}
+                                  onCourseSaved={(state) => {
+                                      this.props.onCourseEdited(state);
+                                      this.setState({isCourseBeingEdited: false});
+                                  }}/>
         }
         const course = this.props.selectedCourse;
         const {habitBeingEdited, isShowingAnalytics} = this.state;
@@ -185,7 +189,7 @@ export class CourseHomePage extends React.Component {
         return <div className='CourseHomePage'>
             <div className='topBar'>
                 {this.props.selectedCourse.shortName} : {this.props.selectedCourse.longName}
-                <i class="fas fa-cogs"  />
+                <i className="fas fa-cog my-cog" onClick={() => this.setState({isCourseBeingEdited: true})}  />
                 {/*<div className="percentage"></div>*/}
                 <div className="btn-group btn-group-toggle my-group" data-toggle="buttons">
                     <label
@@ -202,7 +206,6 @@ export class CourseHomePage extends React.Component {
                     </label>
                 </div>
             </div>
-            <button onClick={() => this.setState({isCourseBeingEdited: true})}>Edit</button> {/*TODO Ryan make this prettier*/}
             {bottomContent}
         </div>;
     }

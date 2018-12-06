@@ -33,8 +33,22 @@ export class NewCoursePage extends Component {
             newACWeight: 0.0,
             firstTime: true,
             modelFirstTime: true,
+            editing: false,
             ...props.initalState
         };
+        if (props.initalState) {
+            this.state.editing = true;
+            let sum = 0.0;
+            for (const category of this.state.categories) {
+                sum += category['weight'];
+            }
+            if (sum !== 100.0) {
+                let ratio = 100.0 / sum;
+                for (const category of this.state.categories) {
+                    category['weight'] *= ratio;
+                }
+            }
+        }
         this.setItem = this.setItem.bind(this);
         this.onModalSaved = this.onModalSaved.bind(this);
         this.onSaved = this.onSaved.bind(this);
@@ -149,7 +163,7 @@ export class NewCoursePage extends Component {
 
             <div>
             <div className="NewClassPage">
-                <div className="title">Add new class</div>
+                <div className="title">{this.state.editing ? 'Editing class' : 'Add new class'}</div>
                 <div className="content">
 
 

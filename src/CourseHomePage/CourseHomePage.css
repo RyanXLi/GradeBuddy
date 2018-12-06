@@ -90,3 +90,14 @@
 .btn-link {
     color: royalblue;
 }
+
+.my-cog {
+    font-size:30px;
+    margin:5px;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.my-cog:hover{
+    font-size: 40px;
+    transform: rotate(45deg);
+}
