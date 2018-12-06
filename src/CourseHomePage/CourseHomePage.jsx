@@ -126,10 +126,8 @@ export class CourseHomePage extends React.Component {
                 onAssignmentDeleted={() => this.handleAssignmentDelete(assignment)}
             />
         ));
-        
-        const cat_percentage = category.weight*100;
 
-        return <CollapseWithHeading className='categoryHeading' key={category.name} headingText={`${category.name} (${cat_percentage}%)`} titleBackground={true}>
+        return <CollapseWithHeading className='categoryHeading' key={category.name} headingText={`${category.name} (${category.weight}%)`} titleBackground={true}>
             <table className="table table-hover">
                 <thead>
                     <tr className='tableRow'>

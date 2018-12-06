@@ -10,15 +10,15 @@ const COURSE = {
     categories: [
         {
             name: 'Homework',
-            weight: .3
+            weight: 30
         },
         {
             name: 'Exams',
-            weight: .5
+            weight: 50
         },
         {
             name: 'Quizzes',
-            weight: .2
+            weight: 20
         }
     ],
     assignments: [ // Array of objects with this schema, empty at first

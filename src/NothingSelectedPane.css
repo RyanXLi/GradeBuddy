@@ -1,7 +1,7 @@
 .NothingSelectedPane {
     height: 100%;
     background:url("welcome_image.png");
-    background-size: 1200px;
+    background-size: cover;
     background-repeat: no-repeat;
     color: #000000b0;
     padding: 15%;
