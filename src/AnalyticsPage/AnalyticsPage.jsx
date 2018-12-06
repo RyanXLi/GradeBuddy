@@ -9,6 +9,10 @@ import { CollapseWithHeading } from '../CollapseWithHeader';
 
 import './AnalyticsPage.css';
 
+function numberToBool(number) {
+    return number !== 0;
+}
+
 export class AnalyticsPage extends React.Component {
     static propTypes = {
         selectedCourse: PropTypes.object.isRequired,
@@ -27,6 +31,7 @@ export class AnalyticsPage extends React.Component {
         };
         this.setIsAggregatingAll = this.setIsAggregatingAll.bind(this);
         this.handleXAxisChange = this.handleXAxisChange.bind(this);
+        this.getTooltipContentsForPoint = this.getTooltipContentsForPoint.bind(this);
         this.aggregateData = memoizeOne(this.aggregateData);
     }
 
@@ -45,6 +50,7 @@ export class AnalyticsPage extends React.Component {
             const dataOrigins = _.flatMap(resultsPerClass, classResult => classResult.dataOrigins);
             return {
                 aggregationName: aggregator.aggregationName,
+                dataType: aggregator.dataType,
                 data,
                 dataOrigins,
                 regressionResult: regression.linear(data)
@@ -105,6 +111,29 @@ export class AnalyticsPage extends React.Component {
         </div>;
     }
 
+    getTooltipContentsForPoint(index) {
+        const origin = this.selectedData.dataOrigins[index];
+        let x = this.selectedData.data[index][0];
+        if (this.selectedData.dataType === 'boolean') {
+            x = numberToBool(x);
+        }
+        const percent = this.selectedData.data[index][1].toFixed(1);
+        return <table className='table-sm table-bordered' style={{margin: 0}}>
+            <tbody>
+                <tr><td>Class</td><td><b>{origin.course.shortName}</b></td></tr>
+                <tr><td>Assignment</td><td><b>{origin.assignment.name}</b></td></tr>
+                <tr>
+                    <td>{this.selectedData.aggregationName}</td>
+                    <td><b>{String(x)}</b></td>
+                </tr>
+                <tr>
+                    <td>Grade</td>
+                    <td><b>{percent}%</b> ({origin.assignment.pointsEarned}/{origin.assignment.pointsPossible})</td>
+                </tr>
+            </tbody>
+        </table>;
+    }
+
     render() {
         const {courses, selectedCourse} = this.props;
         const {isAggregatingAll, selectedAggregator} = this.state;
@@ -112,6 +141,7 @@ export class AnalyticsPage extends React.Component {
         const selectedData = aggregationResults.find(aggregate =>
             aggregate.aggregationName === selectedAggregator
         );
+        this.selectedData = selectedData;
         const regressionResult = selectedData && selectedData.regressionResult.equation.every(isFinite) ?
             selectedData.regressionResult : undefined;
 
@@ -122,6 +152,7 @@ export class AnalyticsPage extends React.Component {
                         data={selectedData.data}
                         regressionResult={regressionResult}
                         xLabel={selectedAggregator}
+                        getPointTooltipContents={this.getTooltipContentsForPoint}
                     />
                     :
                     <Scatterplot /> // Empty scatterplot if no selected data

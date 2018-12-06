@@ -19,7 +19,12 @@ export class Scatterplot extends React.Component {
         width: PropTypes.number.isRequired,
         height: PropTypes.number.isRequired,
         xLabel: PropTypes.string,
-        getPointTooltip: PropTypes.func
+        /**
+         * Callback for when a point is hovered.  Should return tooltip contents to render.
+         * (index: number): JSX.Element
+         *     `index`: the index of the hovered data point
+         */
+        getPointTooltipContents: PropTypes.func,
     };
 
     static defaultProps = {
@@ -36,10 +41,12 @@ export class Scatterplot extends React.Component {
         this.getScales = memoizeOne(this.getScales);
         this.state = {
             regressionTooltipLocation: null,
-            pointTooltip: null,
+            pointTooltipLocation: null,
+            hoveredPointIndex: -1,
         };
 
         this.handleRegressionHover = this.handleRegressionHover.bind(this);
+        this.handlePointHover = this.handlePointHover.bind(this);
         this.hideTooltips = this.hideTooltips.bind(this);
     }
 
@@ -57,10 +64,21 @@ export class Scatterplot extends React.Component {
         });
     }
 
+    handlePointHover(event, i) {
+        this.setState({
+            pointTooltipLocation: {
+                ...getRelativeCoordinates(event),
+                pageX: event.pageX,
+                pageY: event.pageY
+            },
+            hoveredPointIndex: i
+        });
+    }
+
     hideTooltips() {
         this.setState({
             regressionTooltipLocation: null,
-            pointTooltip: null
+            pointTooltipLocation: null
         });
     }
 
@@ -112,6 +130,8 @@ export class Scatterplot extends React.Component {
             r={4}
             fill='cadetblue'
             fillOpacity={0.75}
+            onMouseMove={event => this.handlePointHover(event, i)}
+            onMouseOut={this.hideTooltips}
         />);
     }
 
@@ -164,6 +184,17 @@ export class Scatterplot extends React.Component {
         </Tooltip>;
     }
 
+    renderPointTooltip() {
+        const location = this.state.pointTooltipLocation;
+        const index = this.state.hoveredPointIndex;
+        const {data, getPointTooltipContents} = this.props;
+        if (!location || index < 0 || index >= data.length || !getPointTooltipContents) {
+            return null;
+        }
+
+        return <Tooltip x={location.pageX} y={location.pageY}>{getPointTooltipContents(index)}</Tooltip>;
+    }
+
     render() {
         const {width, height, xLabel} = this.props;
         return <div className='Scatterplot'>
@@ -178,6 +209,7 @@ export class Scatterplot extends React.Component {
                     </svg>
                 </DivWithBullseye>
                 {this.renderRegressionTooltip()}
+                {this.renderPointTooltip()}
             </div>
             <span className='Scatterplot-x-label'>{xLabel}</span>
         </div>
