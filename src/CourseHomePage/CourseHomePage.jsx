@@ -8,6 +8,7 @@ import { AssignmentRow } from './AssignmentRow';
 import { CollapseWithHeading } from '../CollapseWithHeader';
 import { HabitPage } from '../HabitPage/HabitPage';
 import { AnalyticsPage } from '../AnalyticsPage/AnalyticsPage';
+import { NewCoursePage } from '../NewCoursePage/NewCoursePage';
 import './CourseHomePage.css';
 
 /**
@@ -148,6 +149,9 @@ export class CourseHomePage extends React.Component {
     }
 
     render() {
+        if (this.state.isCourseBeingEdited) { // TODO Ryan: move this if statement somewhere better
+            return <NewCoursePage initalState={this.props.selectedCourse} onCourseSaved={this.props.onCourseEdited}/>
+        }
         const course = this.props.selectedCourse;
         const {habitBeingEdited, isShowingAnalytics} = this.state;
         if (habitBeingEdited) {
@@ -198,6 +202,7 @@ export class CourseHomePage extends React.Component {
                     </label>
                 </div>
             </div>
+            <button onClick={() => this.setState({isCourseBeingEdited: true})}>Edit</button> {/*TODO Ryan make this prettier*/}
             {bottomContent}
         </div>;
     }

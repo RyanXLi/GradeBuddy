@@ -33,6 +33,7 @@ export class NewCoursePage extends Component {
             newACWeight: 0.0,
             firstTime: true,
             modelFirstTime: true,
+            ...props.initalState
         };
         this.setItem = this.setItem.bind(this);
         this.onModalSaved = this.onModalSaved.bind(this);
