@@ -258,7 +258,13 @@ export class NewCoursePage extends Component {
                         <button type="submit" className="submit-button btn btn-primary save-button"
                                 onClick={this.onSaved}>SAVE</button>
 
-                        <button type="cancel" className="cancel-button btn btn-light cancel-button">CANCEL</button>
+                        <button
+                            type="cancel"
+                            className="cancel-button btn btn-light cancel-button"
+                            onClick={this.props.onCancelClicked}
+                        >
+                            CANCEL
+                        </button>
                     </div>
                 </div>
             </div>

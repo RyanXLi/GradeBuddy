@@ -163,7 +163,10 @@ export class Navigation extends React.Component {
                 onCourseEdited={this.handleCourseEdit}
             />;
         } else if (this.state.isAddingCourse) {
-            contentPane = <NewCoursePage onCourseSaved={this.handleCourseAdd} />;
+            contentPane = <NewCoursePage
+                onCourseSaved={this.handleCourseAdd}
+                onCancelClicked={() => this.setState({isAddingCourse: false})}
+            />;
         } else {
             contentPane = <NothingSelectedPane />;
         }

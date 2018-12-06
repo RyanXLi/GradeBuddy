@@ -30,8 +30,8 @@ const COURSE = {
             pointsPossible: 8,
             category: "Homework",
             habits: {
-                dateStarted: '05-05-2018',
-                dateDue: '05-06-2018',
+                dateStarted: '2018-05-05',
+                dateDue: '2018-05-06',
                 hoursSpent: 2,
                 lecturePercentage: 75,
                 workedWithPeers: true
@@ -45,8 +45,8 @@ const COURSE = {
             pointsPossible: 12,
             category: "Homework",
             habits: {
-                dateStarted: '05-05-2018',
-                dateDue: '05-07-2018',
+                dateStarted: '2018-05-05',
+                dateDue: '2018-05-07',
                 hoursSpent: 3,
                 lecturePercentage: 100,
                 workedWithPeers: true
@@ -60,8 +60,8 @@ const COURSE = {
             pointsPossible: 100,
             category: "Exams",
             habits: {
-                dateStarted: '05-05-2018',
-                dateDue: '05-10-2018',
+                dateStarted: '2018-05-05',
+                dateDue: '2018-05-10',
                 hoursSpent: 5,
                 lecturePercentage: 90,
                 workedWithPeers: false
