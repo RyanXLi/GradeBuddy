@@ -16,16 +16,18 @@
 }
 
 .error-style {
-    color: white;
-    background: indianred;
+    /*color: white;*/
+    border: 3px solid red;
     /*@include box-shadow(0 0 5px rgba(220, 0, 0, 1)) !important;*/
     /*border: 1px solid rgba(220, 0, 0, 1) !important;*/
     /*outline: none !important;*/
 }
 
 .error-style:focus {
-    color: white;
-    background: indianred;
+    /*color: white;*/
+    /*background: indianred;*/
+    border: 3px solid red;
+
     /*@include box-shadow(0 0 5px rgba(220, 0, 0, 1)) !important;*/
     /*border: 1px solid rgba(220, 0, 0, 1) !important;*/
     /*outline: none !important;*/

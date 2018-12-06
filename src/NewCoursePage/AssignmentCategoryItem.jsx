@@ -6,8 +6,8 @@ export class AssignmentCategoryItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked: false,
-            valid: false,
+            checked: props.item.weight !== 0,
+            valid: !isNaN(props.item.weight) && props.item.weight > 0 && props.item.weight < 100,
             firstTime: this.props.firstTime,
         };
         this.handleCheckedChange = this.handleCheckedChange.bind(this);
@@ -32,6 +32,15 @@ export class AssignmentCategoryItem extends Component {
     }
 
     handleWeightChange(evt) {
+
+        console.log(Number(evt.target.value));
+
+        this.props.setItem(this.props.index, {
+            name: this.props.item.name,
+            weight: Number(evt.target.value),
+        });
+
+
         if (this.state.firstTime) {
             this.setState({firstTime: false,});
         }
@@ -44,10 +53,7 @@ export class AssignmentCategoryItem extends Component {
             this.setState({valid: true});
         }
         console.log("yes");
-        this.props.setItem(this.props.index, {
-            name: this.props.item.name,
-            weight: Number(evt.target.value),
-        });
+
     }
 
 
@@ -60,6 +66,7 @@ export class AssignmentCategoryItem extends Component {
                 </div>
                 <input type="text"
                        className={"form-control"+ errorStyle}
+                       value={this.props.item.weight}
                        onChange={evt => this.handleWeightChange(evt)}   />
                 <div className="input-group-append">
                     <span className="input-group-text">%</span>

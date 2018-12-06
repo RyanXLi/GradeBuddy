@@ -32,7 +32,23 @@ export class NewCoursePage extends Component {
             newACName: '',
             newACWeight: 0.0,
             firstTime: true,
+            modelFirstTime: true,
+            editing: false,
+            ...props.initalState
         };
+        if (props.initalState) {
+            this.state.editing = true;
+            let sum = 0.0;
+            for (const category of this.state.categories) {
+                sum += category['weight'];
+            }
+            if (sum !== 100.0) {
+                let ratio = 100.0 / sum;
+                for (const category of this.state.categories) {
+                    category['weight'] *= ratio;
+                }
+            }
+        }
         this.setItem = this.setItem.bind(this);
         this.onModalSaved = this.onModalSaved.bind(this);
         this.onSaved = this.onSaved.bind(this);
@@ -68,6 +84,11 @@ export class NewCoursePage extends Component {
     }
 
     onModalSaved() {
+        if (this.state.newACName === '') {
+            return;
+        }
+        this.setState({modelFirstTime: false});
+
         const copy = this.state.categories.slice();
         copy.push({
             name: this.state.newACName,
@@ -137,11 +158,12 @@ export class NewCoursePage extends Component {
 
 
         const warn = !this.state.firstTime && this.state.shortName === '' ? " error-style" : "";
+        const modelWarn = !this.state.modelFirstTime && this.state.newACName === '' ? " error-style" : "";
         return (
 
             <div>
             <div className="NewClassPage">
-                <div className="title">Add new class</div>
+                <div className="title">{this.state.editing ? 'Editing class' : 'Add new class'}</div>
                 <div className="content">
 
 
@@ -203,7 +225,7 @@ export class NewCoursePage extends Component {
                                                 <form>
                                                     <div >
                                                         <label htmlFor="courseTitle">Name</label>
-                                                        <input className="form-control"
+                                                        <input className={"form-control"+modelWarn}
                                                                id="courseTitle"
                                                                value={this.state.newACName}
                                                                onChange={evt => this.updateACName(evt)}
