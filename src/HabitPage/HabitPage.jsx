@@ -48,22 +48,22 @@ export class HabitPage extends Component {
             <div className="habit-title"> Edit study habits</div>
 
             <div className='form-group'>
-                <label htmlFor='Question_startDate'>Q1: Date started</label>
+                <label htmlFor='Question_startDate' className="question">Q1: Date started</label>
                 <input onChange={event => this.handleChange(event, 'dateStarted')} type='date' className='form-control' id='Question_startDate' placeholder='mm/dd/yyyy' />
             </div>
 
             <div className='form-group'>
-                <label htmlFor='Question_due'>Q2: Due date</label>
+                <label htmlFor='Question_due' className="question">Q2: Due date</label>
                 <input onChange={event => this.handleChange(event, 'dateDue')} type='date' className='form-control' id='Question_due' placeholder='mm/dd/yyyy' />
             </div>
 
             <div className='form-group'>
-                <label htmlFor='Question_hours'>Q3: Total hours spent on this assignment/review? </label>
+                <label htmlFor='Question_hours' className="question">Q3: Total hours spent on this assignment/review? </label>
                 <input onChange={event => this.handleChange(event, 'hoursSpent', true)} type='number' className='form-control' id='Question_hours' placeholder='Enter hours' />
             </div>
 
             <div className='form-group'>
-                <label htmlFor='Question_lecture'>Q4: What % of lectures did you attend for this
+                <label htmlFor='Question_lecture' className="question">Q4: What % of lectures did you attend for this
                     assignment/review? </label>
                 <div className="lecture-slider" style={{display: 'flex', alignItems: 'center'}}>
                     <input type='range' className='form-control' id='Question_lecture' min='0' max='100' value={this.state.lecturePercentage}
@@ -73,7 +73,7 @@ export class HabitPage extends Component {
             </div>
 
             <div className='form-group'>
-                <label htmlFor='Question_classmates'>Q5: Did you work with classmate(s)?</label>
+                <label htmlFor='Question_classmates' className="question">Q5: Did you work with classmate(s)?</label>
                 <select className='form-control' id='Question_classmates'
                         onChange={event => this.handleChange(event, 'workedWithPeers')}>
                     <option>Yes</option>

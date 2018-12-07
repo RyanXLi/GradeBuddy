@@ -3,13 +3,13 @@
     height: 100%;
     align-items: center;
     color: var(--theme-grey);
-    font-style: italic;
 }
 
 .habit-title {
+    font-family: 'Noto Sans TC', sans-serif;
     font-size: 2em;
     font-weight: bold;
-    padding-bottom: 10px;
+    padding: 0px 0px 10px 10px;
 }
 
 .HabitPage-inner {
@@ -27,4 +27,16 @@
 
 .form-control {
     width: 75%
+}
+
+.form-group {
+    padding: 10px;
+    font-weight: bold;
+    border-color: cornflowerblue;
+}
+
+.question {
+    width: 100%;
+    background: aliceblue;
+    padding: 3px 3px 3px 7px;
 }
