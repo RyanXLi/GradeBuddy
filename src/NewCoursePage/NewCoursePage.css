@@ -65,3 +65,13 @@
     vertical-align: middle;
     text-align: center;
 }
+
+.newcoursepage-wholenote {
+    padding: 10px 50px 10px 50px;
+    color: grey;
+    font-weight: bold;
+}
+
+/*.newcoursepage-note {*/
+    /*color: red;*/
+/*}*/
