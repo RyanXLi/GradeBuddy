@@ -81,8 +81,8 @@ export class HabitPage extends Component {
                 </select>
             </div>
 
-            <button className='btn btn-primary' onClick={this.handleSavedPressed}>Save</button>
-            <button className='btn btn-light' onClick={this.handleCancelPressed}>Cancel</button>
+            <button className='btn btn-primary btn-save' onClick={this.handleSavedPressed}>Save</button>
+            <button className='btn btn-light btn-cancel' onClick={this.handleCancelPressed}>Cancel</button>
         </div>;
     }
 }

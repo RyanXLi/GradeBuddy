@@ -26,7 +26,8 @@
 }
 
 .form-control {
-    width: 75%
+    width: 75%;
+    margin-left: 50px;
 }
 
 .form-group {
@@ -39,4 +40,14 @@
     width: 100%;
     background: aliceblue;
     padding: 3px 3px 3px 7px;
+}
+
+.btn-save {
+    width: 100px;
+    margin: 10px;
+}
+
+.btn-cancel {
+    width: 100px;
+    margin: 10px;
 }
