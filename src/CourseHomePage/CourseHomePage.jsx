@@ -188,7 +188,8 @@ export class CourseHomePage extends React.Component {
 
         return <div className='CourseHomePage'>
             <div className='topBar'>
-                {this.props.selectedCourse.shortName} : {this.props.selectedCourse.longName}
+                <span className={"class-name-title"}>
+                    {this.props.selectedCourse.shortName} : {this.props.selectedCourse.longName} </span>
                 <i className="fas fa-cog my-cog" onClick={() => this.setState({isCourseBeingEdited: true})}  />
                 {/*<div className="percentage"></div>*/}
                 <div className="btn-group btn-group-toggle my-group" data-toggle="buttons">
