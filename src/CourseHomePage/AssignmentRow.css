@@ -5,13 +5,6 @@
 .AssignmentRow-editable:hover {
     background-color:cornflowerblue;
     color:white;
-    font-weight: bold;
-}
-
-.assignmentName:hover {
-    background-color:cornflowerblue;
-    color:white;
-    font-weight: bold;
 }
 
 .fa-trash:hover {
