@@ -37,7 +37,7 @@ export class AssignmentCategoryItem extends Component {
 
         this.props.setItem(this.props.index, {
             name: this.props.item.name,
-            weight: Number(evt.target.value),
+            weight: isNaN(evt.target.value) ? 0 : Number(evt.target.value),
         });
 
 
