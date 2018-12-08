@@ -34,9 +34,18 @@ export class NewCoursePage extends Component {
             firstTime: true,
             modelFirstTime: true,
             editing: false,
+            oldSet: null,
             ...props.initalState
         };
         if (props.initalState) {
+
+            this.state.oldSet = new Set();
+            for (const category of this.state.categories) {
+                if (category['weight'] > 0) {
+                    this.state.oldSet.add(category['name']);
+                }
+            }
+
             this.state.editing = true;
             let sum = 0.0;
             for (const category of this.state.categories) {
@@ -48,6 +57,7 @@ export class NewCoursePage extends Component {
                     category['weight'] *= ratio;
                 }
             }
+
         }
         this.setItem = this.setItem.bind(this);
         this.onModalSaved = this.onModalSaved.bind(this);
@@ -109,7 +119,6 @@ export class NewCoursePage extends Component {
         let sum = 0.0;
         for (let i = 0; i < this.state.categories.length; i++) {
             if (isNaN(this.state.categories[i]['weight'])) {
-                console.log("nan");
                 valid = false;
                 break;
             }
@@ -117,12 +126,10 @@ export class NewCoursePage extends Component {
         }
 
         const err = 0.00001;
-        console.log(sum);
         if (sum < 100 - err || sum > 100 + err) {
             valid = false;
         }
 
-        console.log(valid);
 
         if (this.state.shortName === undefined || this.state.shortName === '') {
             valid = false;
@@ -133,11 +140,31 @@ export class NewCoursePage extends Component {
             return;
         }
 
+        // alert when categories change
+        if (this.state.editing) {
+            let newSet = new Set();
+            for (const category of this.state.categories) {
+                if (category['weight'] > 0) {
+                    newSet.add(category['name']);
+                }
+            }
+
+            let difference = new Set(
+                [...this.state.oldSet].filter(x => !newSet.has(x)));
+
+            if (difference.size !== 0) {
+                // alert user
+
+                if (!window.confirm('A category will be deleted and the assignments in it will be removed. Do you want to proceed?')) {
+                    return;
+                }
+            }
+        }
+
         const copy = this.state.categories.slice();
         const newcat = copy.filter(item => item['weight'] > 0);
         const stateCopy = {...this.state};
         stateCopy.categories = newcat;
-        console.log(stateCopy);
         this.props.onCourseSaved(stateCopy);
     }
 
@@ -204,7 +231,7 @@ export class NewCoursePage extends Component {
                     >
                         <div className="newcoursepage-wholenote">
                             <span className="newcoursepage-note">Note</span>
-                            {": a weight of 0 will effectively uncheck a category. Weights must sum to 100."}
+                            {": setting a weight of 0 or unchecking a category will effectively remove the category. Weights must sum to 100."}
                         </div>
                         <div className="assignment-category-grid-container section">
                             {assCategoryItems}

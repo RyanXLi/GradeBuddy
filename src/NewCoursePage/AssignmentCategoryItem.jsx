@@ -33,7 +33,7 @@ export class AssignmentCategoryItem extends Component {
 
     handleWeightChange(evt) {
 
-        console.log(Number(evt.target.value));
+        // console.log(Number(evt.target.value));
 
         this.props.setItem(this.props.index, {
             name: this.props.item.name,
@@ -45,14 +45,14 @@ export class AssignmentCategoryItem extends Component {
             this.setState({firstTime: false,});
         }
         if (evt.target.value === '' || isNaN(evt.target.value) || evt.target.value > 100) {
-            console.log("no");
+            // console.log("no");
             this.setState({valid: false});
             return;
         }
         if (!this.valid) {
             this.setState({valid: true});
         }
-        console.log("yes");
+        // console.log("yes");
 
     }
 
