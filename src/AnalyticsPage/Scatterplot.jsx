@@ -198,7 +198,7 @@ export class Scatterplot extends React.Component {
     render() {
         const {width, height, xLabel} = this.props;
         return <div className='Scatterplot'>
-            <div>
+            <div className='Scatterplot-inner'>
                 <span className='Scatterplot-y-label'>Grade %</span>
                 <DivWithBullseye style={{display: 'inline-block'}}>
                     <svg className='Scatterplot-svg' width={width} height={height}>

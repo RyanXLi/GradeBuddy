@@ -2,6 +2,10 @@
     display: inline-block;
 }
 
+.Scatterplot-inner {
+    display: flex;
+}
+
 .Scatterplot-svg {
     overflow: visible;
     margin: 20px 25px;
@@ -17,7 +21,6 @@
 }
 
 .Scatterplot-y-label {
-    float: left;
     writing-mode: vertical-rl;
 }
 

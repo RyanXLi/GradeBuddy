@@ -207,13 +207,19 @@ export class CourseHomePage extends React.Component {
                 {course.categories.map(
                     category => this.renderCategoryTable(category, assignmentsForCategory[category.name])
                 )}
-                <label style={{display: 'flex'}}>
-                    <span style={{marginRight: '1ch'}}>Toggle course active status</span>
-                    <Switch onChange={this.toggleActive} checked={course.isActive} />
-                </label>
-                <button className='btn btn-danger' onClick={this.toggleWarningModal} >
-                    Delete class
-                </button>
+                <div style={{float: 'right', marginRight: '30px'}}>
+                    <label style={{display: 'flex'}}>
+                        <span style={{marginRight: '1ch'}}>Status: <b>{course.isActive ? 'active' : 'inactive'}</b></span>
+                        <Switch onChange={this.toggleActive} checked={course.isActive} />
+                    </label>
+                    <div>
+                        <span>Delete class</span>
+                        <button className='btn-sm btn-danger' style={{float: 'right', width: 56}} onClick={this.toggleWarningModal} >
+                            <i className='fa fa-trash' />
+                        </button>
+                    </div>
+                    
+                </div>
                 {this.renderWarningModal()}
             </div>
         }
