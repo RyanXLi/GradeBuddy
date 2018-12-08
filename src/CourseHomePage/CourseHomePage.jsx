@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v4';
 import Switch from 'react-switch';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { AssignmentRow } from './AssignmentRow';
 import { CollapseWithHeading } from '../CollapseWithHeader';
@@ -21,7 +22,8 @@ export class CourseHomePage extends React.Component {
     static propTypes = {
         courses: PropTypes.arrayOf(PropTypes.object).isRequired,
         selectedCourse: PropTypes.object.isRequired,
-        onCourseEdited: PropTypes.func
+        onCourseEdited: PropTypes.func,
+        onCourseDeleteRequested: PropTypes.func
     };
 
     static defaultProps = {
@@ -34,7 +36,8 @@ export class CourseHomePage extends React.Component {
             isCourseBeingEdited: false,
             prevCourseId: props.selectedCourse.id,
             habitBeingEdited: '', // ID of the assignment whose habits are being edited
-            isShowingAnalytics: false
+            isShowingAnalytics: false,
+            isShowingDeleteWarning: false,
         };
         this.handleAssignmentAdd = this.handleAssignmentAdd.bind(this);
         this.handleAssignmentSave = this.handleAssignmentSave.bind(this);
@@ -42,6 +45,7 @@ export class CourseHomePage extends React.Component {
         this.setHabitBeingEdited = this.setHabitBeingEdited.bind(this);
         this.handleHabitSave = this.handleHabitSave.bind(this);
         this.toggleActive = this.toggleActive.bind(this);
+        this.toggleWarningModal = this.toggleWarningModal.bind(this);
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -50,6 +54,7 @@ export class CourseHomePage extends React.Component {
                 prevCourseId: props.selectedCourse.id,
                 habitBeingEdited: '',
                 isCourseBeingEdited: false,
+                isShowingDeleteWarning: false,
             };
         } else {
             return { prevCourseId: props.selectedCourse.id };
@@ -147,8 +152,25 @@ export class CourseHomePage extends React.Component {
         </CollapseWithHeading>
     }
 
-    handleChange(checked) {
-        this.setState({ habitBeingEdited:this.state.habitBeingEdited, enabled:checked });
+    toggleWarningModal() {
+        this.setState(prevState => {
+            return {isShowingDeleteWarning: !prevState.isShowingDeleteWarning}
+        });
+    }
+
+    renderWarningModal() {
+        return <Modal isOpen={this.state.isShowingDeleteWarning} toggle={this.toggleWarningModal} >
+            <ModalHeader toggle={this.toggleWarningModal}>Delete {this.props.selectedCourse.shortName}?</ModalHeader>
+            <ModalBody>
+                All assignments will be <b>PERMANENTLY lost</b>.  This <b>CANNOT be undone</b>!
+            </ModalBody>
+            <ModalFooter>
+                <button className="btn btn-danger" onClick={this.props.onCourseDeleteRequested}>
+                    Delete
+                </button>
+                <button type="button" className="btn" onClick={this.toggleWarningModal}>Cancel</button>
+            </ModalFooter>
+        </Modal>;
     }
 
     render() {
@@ -189,6 +211,10 @@ export class CourseHomePage extends React.Component {
                     <span style={{marginRight: '1ch'}}>Toggle course active status</span>
                     <Switch onChange={this.toggleActive} checked={course.isActive} />
                 </label>
+                <button className='btn btn-danger' onClick={this.toggleWarningModal} >
+                    Delete class
+                </button>
+                {this.renderWarningModal()}
             </div>
         }
 

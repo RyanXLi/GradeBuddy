@@ -41,6 +41,7 @@ export class Navigation extends React.Component {
         this.showAddCoursesPane = this.showAddCoursesPane.bind(this);
         this.handleCourseAdd = this.handleCourseAdd.bind(this);
         this.handleCourseEdit = this.handleCourseEdit.bind(this);
+        this.handleCourseDelete = this.handleCourseDelete.bind(this);
         this.toggleSidebar = this.toggleSidebar.bind(this);
     }
 
@@ -82,6 +83,13 @@ export class Navigation extends React.Component {
         const index = this.props.courses.findIndex(course => course.id === this.state.selectedCourse);
         const coursesCopy = this.props.courses.slice();
         coursesCopy[index] = course;
+        this.props.onCoursesChanged(coursesCopy);
+    }
+
+    handleCourseDelete() {
+        const index = this.props.courses.findIndex(course => course.id === this.state.selectedCourse);
+        const coursesCopy = this.props.courses.slice();
+        coursesCopy.splice(index, 1);
         this.props.onCoursesChanged(coursesCopy);
     }
 
@@ -161,6 +169,7 @@ export class Navigation extends React.Component {
                 courses={this.props.courses}
                 selectedCourse={selectedCourse}
                 onCourseEdited={this.handleCourseEdit}
+                onCourseDeleteRequested={this.handleCourseDelete}
             />;
         } else if (this.state.isAddingCourse) {
             contentPane = <NewCoursePage
