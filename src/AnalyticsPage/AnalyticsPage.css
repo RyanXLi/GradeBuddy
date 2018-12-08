@@ -34,3 +34,11 @@
     width: 400px;
     padding-top:10px;
 }
+
+.advancedAnalytics{
+    font-weight: bold;
+}
+
+.analyticsTable{
+    max-width: 500px;
+}
