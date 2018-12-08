@@ -204,7 +204,7 @@ export class NewCoursePage extends Component {
                     >
                         <div className="newcoursepage-wholenote">
                             <span className="newcoursepage-note">Note</span>
-                            {": Unchecked category will have a weight of 0. Weights must sum to 100."}
+                            {": a weight of 0 will effectively uncheck a category. Weights must sum to 100."}
                         </div>
                         <div className="assignment-category-grid-container section">
                             {assCategoryItems}

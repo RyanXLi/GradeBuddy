@@ -182,8 +182,9 @@ export class Navigation extends React.Component {
 
         return <div className='Navigation'>
             <nav className='navbar navbar-expand-lg navbar-light Navigation-navbar'>
-                <div className='navbar-brand' style={{display: 'flex'}}>
-                    <img src={bulbImage} className="my-img" alt="logo"/><span className="app-title">Grade Buddy</span>
+                <div className='navbar-brand' style={{display: 'flex'}} onClick={() => this.setState({selectedCourse: ''})}>
+                    <img src={bulbImage} className="my-img" alt="logo" />
+                    <span className="app-title">Grade Buddy</span>
                 </div>
             </nav>
             <div className='Navigation-main-container'>
