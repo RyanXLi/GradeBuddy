@@ -237,13 +237,13 @@ export class CourseHomePage extends React.Component {
                         className="btn btn-outline-primary active"
                         onClick={() => this.setState({isShowingAnalytics: false})}
                     >
-                        <input type="radio" name="options" id="option1" autoComplete="off" checked/> Class Home
+                        <input type="radio" name="options" id="option1" autoComplete="off" checked readOnly={true}/> Class Home
                     </label>
                     <label
                         className="btn btn-outline-primary"
                         onClick={() => this.setState({isShowingAnalytics: true})}
                     >
-                        <input type="radio" name="options" id="option2" autoComplete="off"/>Analytics
+                        <input type="radio" name="options" id="option2" autoComplete="off" readOnly={true}/>Analytics
                     </label>
                 </div>
             </div>
