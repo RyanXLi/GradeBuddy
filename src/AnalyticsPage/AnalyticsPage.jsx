@@ -78,10 +78,23 @@ export class AnalyticsPage extends React.Component {
             return null;
         }
         const {string, equation, points, r2} = regressionResult;
-        return <CollapseWithHeading headingText='Advanced statistics' initialIsOpen={false}>
-            <div className="advancedLine">Assignments in data pool: <b>{points.length}</b></div>
-            <div className="advancedLine">Correlation between grades and {this.state.selectedAggregator} (0 - no correlation, 1 - perfect correlation): <b>{isFinite(r2) ? r2 : 'undefined'}</b></div>
-            <div className="advancedLine">Line Equation: <b>{equation.every(isFinite) ? string : 'undefined'}</b></div>
+        return <CollapseWithHeading headingText='Advanced statistics' headingClassName="advancedAnalytics" initialIsOpen={false}>
+            <table className="analyticsTable table-bordered">
+                <tr>
+                    <td>Assignments in data pool: </td>
+                    <td><b>{points.length}</b></td> 
+                </tr>
+                <tr>
+                    <td>
+                        Correlation of Grades with {this.state.selectedAggregator}:  
+                    </td>
+                    <td><b>{isFinite(r2) ? r2 : 'undefined'}</b></td> 
+                </tr>
+                <tr>
+                    <td>Line Equation: </td>
+                    <td><b>{equation.every(isFinite) ? string : 'undefined'}</b></td> 
+                </tr>
+            </table>
         </CollapseWithHeading>;
     }
 
