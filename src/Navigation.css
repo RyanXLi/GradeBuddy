@@ -21,6 +21,7 @@
 }
 
 .Navigation-sidebar {
+    background: white;
     min-width: 300px;
     width: 300px;
     overflow-y: scroll;
@@ -91,7 +92,7 @@
 }
 
 .app-title {
-    font-family: 'Julius Sans One', sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
     font-weight: bold;
     display: flex;
     align-items: center;

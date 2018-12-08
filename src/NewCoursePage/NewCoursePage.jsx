@@ -168,9 +168,9 @@ export class NewCoursePage extends Component {
 
 
                     <CollapseWithHeading
-                        className="collapse"
+                        className="collapse class-info"
                         headingText='Class Information'
-                        headingClassName='Navigation-sidebar-heading Navigation-sidebar-active-heading'
+                        headingClassName='collapse-title'
                     >
 
 
@@ -198,8 +198,9 @@ export class NewCoursePage extends Component {
 
 
                     <CollapseWithHeading
+                        className="class-info"
                         headingText='Assignment Categories'
-                        headingClassName='Navigation-sidebar-heading Navigation-sidebar-active-heading'
+                        headingClassName='collapse-title'
                     >
                         <div className="assignment-category-grid-container section">
                             {assCategoryItems}

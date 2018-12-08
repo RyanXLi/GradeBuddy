@@ -9,11 +9,5 @@ import './NothingSelectedPane.css';
  */
 export function NothingSelectedPane() {
     return <div className='NothingSelectedPane'>
-        <div className='welcome'>
-        	Welcome back!
-        </div>
-        <span className='NothingSelectedPane-inner'>
-            Select a class on the left, or add a new class.
-        </span>
     </div>;
 }

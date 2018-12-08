@@ -37,6 +37,10 @@
     margin-bottom: 10px;
 }
 
+.class-name-title{
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
 .analyticsButton{
     font-size:0.9em;
     border:1px;
@@ -77,7 +81,7 @@
 }
 
 .fa-plus2:hover{
-    color:blue;
+    color:royalblue;
 }
 
 .addRow{

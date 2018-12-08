@@ -224,7 +224,7 @@ export class CourseHomePage extends React.Component {
         }
         return <div className='CourseHomePage'>
             <div className='topBar'>
-                {title}
+                <span className={"class-name-title"}>{title}</span>
                 <i className="fas fa-cog my-cog" onClick={() => this.setState({isCourseBeingEdited: true})} />
                 <div className="btn-group btn-group-toggle my-group" data-toggle="buttons">
                     <label
