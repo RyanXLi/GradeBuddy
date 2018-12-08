@@ -202,6 +202,10 @@ export class NewCoursePage extends Component {
                         headingText='Assignment Categories'
                         headingClassName='collapse-title'
                     >
+                        <div className="newcoursepage-wholenote">
+                            <span className="newcoursepage-note">Note</span>
+                            {": Unchecked category will have a weight of 0. Weights must sum to 100."}
+                        </div>
                         <div className="assignment-category-grid-container section">
                             {assCategoryItems}
                             <div className="assignment-category-grid-item">
@@ -251,7 +255,10 @@ export class NewCoursePage extends Component {
                                 </div>
                             </div>
                         </div>
+
+
                     </CollapseWithHeading>
+
 
 
                     <div className="buttons">

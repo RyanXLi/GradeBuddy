@@ -76,3 +76,9 @@
     padding: 7px 20px;
     margin-bottom: 10px;
 }
+
+.newcoursepage-wholenote {
+    padding: 10px 50px 10px 50px;
+    color: grey;
+    font-weight: bold;
+}
